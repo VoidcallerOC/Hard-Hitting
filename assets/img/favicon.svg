@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 44 44" role="img" aria-label="Hard Hittin' Cards">
+  <defs>
+    <linearGradient id="fav" x1="4" y1="4" x2="40" y2="40" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FF4C5E"/>
+      <stop offset="1" stop-color="#C0122A"/>
+    </linearGradient>
+  </defs>
+  <rect width="44" height="44" rx="10" fill="#0A0A0B"/>
+  <rect x="9" y="6" width="26" height="32" rx="5" fill="url(#fav)"/>
+  <path d="M15.5 12 h4 v5 h5 v-5 h4 v20 h-4 v-8 h-5 v8 h-4 z" fill="#fff"/>
+</svg>
