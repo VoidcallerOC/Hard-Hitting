@@ -175,8 +175,8 @@ body.menu-open .nav-toggle span::after { top: 0; transform: rotate(-45deg); }
   position: relative; min-height: 100svh; display: flex; align-items: center;
   padding-top: 120px; overflow: hidden;
   background:
-    radial-gradient(120% 90% at 50% -10%, rgba(240,48,71,0.18), transparent 55%),
-    radial-gradient(70% 60% at 85% 112%, rgba(246,184,33,0.10), transparent 60%),
+    radial-gradient(120% 90% at 50% -10%, rgba(231,33,43,0.18), transparent 55%),
+    radial-gradient(70% 60% at 85% 112%, rgba(231,33,43,0.08), transparent 60%),
     var(--bg);
 }
 .hero-grid {
@@ -199,7 +199,7 @@ body.menu-open .nav-toggle span::after { top: 0; transform: rotate(-45deg); }
 .float-card::after {
   content: ""; width: 46%; height: 46%; border-radius: 6px;
   background: radial-gradient(circle at 40% 35%, var(--red-glow), transparent 70%);
-  border: 1px solid rgba(240,48,71,.25);
+  border: 1px solid rgba(231,33,43,.25);
 }
 .float-card i { position: absolute; inset: 8px; border-radius: 6px; border: 1px solid rgba(255,255,255,.05); }
 
@@ -296,12 +296,12 @@ body.menu-open .nav-toggle span::after { top: 0; transform: rotate(-45deg); }
 }
 .pillar::before {
   content: ""; position: absolute; inset: 0; opacity: 0; transition: opacity .45s var(--ease);
-  background: radial-gradient(120% 80% at 50% 0%, rgba(240,48,71,.16), transparent 60%);
+  background: radial-gradient(120% 80% at 50% 0%, rgba(231,33,43,.16), transparent 60%);
 }
-.pillar:hover { border-color: rgba(240,48,71,.5); transform: translateY(-6px); }
+.pillar:hover { border-color: rgba(231,33,43,.5); transform: translateY(-6px); }
 .pillar:hover::before { opacity: 1; }
 .pillar .num { font-family: var(--ff-display); color: var(--red); font-size: 1rem; letter-spacing: .2em; opacity: .8; }
-.pillar .ico { width: 54px; height: 54px; border-radius: 14px; display: grid; place-items: center; margin: 14px 0 18px; background: rgba(240,48,71,.1); border: 1px solid rgba(240,48,71,.28); color: var(--red); }
+.pillar .ico { width: 54px; height: 54px; border-radius: 14px; display: grid; place-items: center; margin: 14px 0 18px; background: rgba(231,33,43,.1); border: 1px solid rgba(231,33,43,.28); color: var(--red); }
 .pillar .ico svg { width: 27px; height: 27px; }
 .pillar h3 { font-family: var(--ff-display); text-transform: uppercase; font-size: 1.8rem; letter-spacing: .02em; margin-bottom: 8px; }
 .pillar p { color: var(--muted); font-size: .96rem; }
@@ -418,7 +418,7 @@ body.menu-open .nav-toggle span::after { top: 0; transform: rotate(-45deg); }
 
 /* ---------- Reserve a table ---------- */
 .reserve { text-align: center; background:
-  radial-gradient(80% 120% at 50% 0%, rgba(240,48,71,.14), transparent 60%), var(--bg); }
+  radial-gradient(80% 120% at 50% 0%, rgba(231,33,43,.14), transparent 60%), var(--bg); }
 .reserve-card {
   position: relative; overflow: hidden; border-radius: var(--radius-lg);
   border: 1px solid var(--line); padding: clamp(40px, 7vw, 76px) clamp(24px, 5vw, 64px);
@@ -457,8 +457,8 @@ body.menu-open .nav-toggle span::after { top: 0; transform: rotate(-45deg); }
 
 .contact-block { display: flex; flex-direction: column; gap: 14px; }
 .contact-row { display: flex; align-items: center; gap: 16px; padding: 18px 20px; background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); transition: border-color .3s ease, transform .3s ease; }
-.contact-row:hover { border-color: rgba(240,48,71,.45); transform: translateX(4px); }
-.contact-row .ci { width: 44px; height: 44px; border-radius: 12px; flex: none; display: grid; place-items: center; background: rgba(240,48,71,.1); color: var(--red); border: 1px solid rgba(240,48,71,.25); }
+.contact-row:hover { border-color: rgba(231,33,43,.45); transform: translateX(4px); }
+.contact-row .ci { width: 44px; height: 44px; border-radius: 12px; flex: none; display: grid; place-items: center; background: rgba(231,33,43,.1); color: var(--red); border: 1px solid rgba(231,33,43,.25); }
 .contact-row .ci svg { width: 20px; height: 20px; }
 .contact-row .cl { font-family: var(--ff-head); text-transform: uppercase; letter-spacing: .16em; font-size: .66rem; color: var(--muted-2); }
 .contact-row .cv { font-size: 1.05rem; font-weight: 500; }
