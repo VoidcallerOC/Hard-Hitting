@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 44 52" fill="none" role="img" aria-label="Hard Hittin' Cards mark">
+  <defs>
+    <linearGradient id="hh-card" x1="4" y1="2" x2="40" y2="50" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FF4C5E"/>
+      <stop offset="1" stop-color="#C0122A"/>
+    </linearGradient>
+  </defs>
+  <!-- impact ticks -->
+  <g stroke="#F6B821" stroke-width="2.4" stroke-linecap="round">
+    <path d="M3 9 L7 12"/>
+    <path d="M41 9 L37 12"/>
+    <path d="M22 1 L22 5"/>
+  </g>
+  <!-- card -->
+  <rect x="6" y="6" width="32" height="44" rx="6" fill="url(#hh-card)" stroke="#22060a" stroke-width="1.5"/>
+  <rect x="9.5" y="9.5" width="25" height="37" rx="3.5" fill="none" stroke="#ffffff" stroke-opacity="0.28" stroke-width="1.2"/>
+  <!-- bold HH monogram -->
+  <path d="M15 16 h4 v6 h6 v-6 h4 v20 h-4 v-9 h-6 v9 h-4 z" fill="#fff"/>
+  <!-- star spark -->
+  <path d="M22 38 l1.4 3.1 3.4 .4-2.5 2.3.7 3.3-3-1.7-3 1.7.7-3.3-2.5-2.3 3.4-.4z" fill="#F6B821"/>
+</svg>
