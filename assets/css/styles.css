@@ -15,14 +15,16 @@
   --muted:     #ABA6B2;
   --muted-2:   #746F7C;
 
-  --red:       #F03047;
-  --red-2:     #FF5468;
-  --red-deep:  #B21226;
-  --red-glow:  rgba(240, 48, 71, 0.35);
+  --red:       #E7212B;
+  --red-2:     #FF3A44;
+  --red-deep:  #A50E13;
+  --red-glow:  rgba(231, 33, 43, 0.35);
 
-  --gold:      #F6B821;
-  --gold-2:    #FFD15C;
-  --gold-glow: rgba(246, 184, 33, 0.30);
+  /* Brand is red / black / white — this "premium" accent (used on the flagship
+     show + reserve callout) is a clean off-white, not gold. */
+  --gold:      #F2F2F2;
+  --gold-2:    #FFFFFF;
+  --gold-glow: rgba(255, 255, 255, 0.16);
 
   --maxw: 1200px;
   --gutter: clamp(20px, 5vw, 64px);
@@ -104,8 +106,8 @@ ul { list-style: none; padding: 0; }
 .btn svg { width: 18px; height: 18px; }
 .btn--primary { background: var(--red); color: #fff; box-shadow: 0 10px 30px -10px var(--red-glow); }
 .btn--primary:hover { background: var(--red-2); transform: translateY(-3px); box-shadow: 0 18px 40px -12px var(--red-glow); }
-.btn--gold { background: var(--gold); color: #241800; box-shadow: 0 10px 30px -10px var(--gold-glow); }
-.btn--gold:hover { background: var(--gold-2); transform: translateY(-3px); box-shadow: 0 18px 40px -12px var(--gold-glow); }
+.btn--gold { background: #fff; color: #141414; box-shadow: 0 10px 30px -10px var(--gold-glow); }
+.btn--gold:hover { background: #e8e8e8; transform: translateY(-3px); box-shadow: 0 18px 40px -12px var(--gold-glow); }
 .btn--ghost { border: 1.5px solid var(--line); color: var(--white); }
 .btn--ghost:hover { border-color: var(--red); color: var(--red); transform: translateY(-3px); }
 .btn--block { width: 100%; justify-content: center; }
@@ -142,6 +144,7 @@ body.cursor-active .cursor-glow { opacity: 0.55; }
   font-size: 1.12rem; letter-spacing: 0.02em; line-height: 1;
 }
 .brand-name b { color: var(--red); font-weight: 400; }
+.brand-script { font-family: "Yellowtail", cursive; text-transform: none; color: var(--red); font-size: 1.32rem; line-height: 1; display: inline-block; transform: rotate(-2deg); margin-right: 3px; }
 .brand-tag { font-family: var(--ff-head); font-size: .56rem; letter-spacing: .26em; color: var(--muted-2); text-transform: uppercase; }
 
 .nav-links { display: flex; align-items: center; gap: 30px; }
@@ -212,11 +215,23 @@ body.menu-open .nav-toggle span::after { top: 0; transform: rotate(-45deg); }
 
 .wordmark {
   font-family: var(--ff-display); font-weight: 400; text-transform: uppercase;
-  line-height: 0.84; letter-spacing: 0.005em; margin: 22px 0 6px;
+  line-height: 0.82; letter-spacing: 0.005em; margin: 18px 0 6px;
 }
-.wordmark .top { display: block; font-size: clamp(1rem, 3vw, 1.9rem); letter-spacing: .42em; color: var(--red); margin-bottom: .34em; padding-left: .42em; }
-.wordmark .name { display: block; font-size: clamp(3rem, 13vw, 9.6rem); color: var(--white); }
-.wordmark .name .o { color: var(--red); display: inline-block; }
+/* Script tier — echoes the brand's baseball-script "Hard Hittin'" */
+.wordmark .script {
+  display: block; font-family: "Yellowtail", cursive; text-transform: none;
+  font-weight: 400; color: var(--red); line-height: .9;
+  font-size: clamp(2.3rem, 8.5vw, 5.6rem); letter-spacing: .01em;
+  transform: rotate(-3deg); transform-origin: center;
+  text-shadow: 2px 3px 0 rgba(0,0,0,.45), 0 10px 40px var(--red-glow);
+  margin-bottom: -.04em;
+}
+/* Block tier — bold "CARDS" in brand red, outlined like the logo */
+.wordmark .name {
+  display: block; font-size: clamp(3rem, 14vw, 10rem); color: var(--red);
+  -webkit-text-stroke: 1.5px rgba(255,255,255,.12);
+  text-shadow: 3px 4px 0 rgba(0,0,0,.5), 0 10px 50px var(--red-glow);
+}
 
 .hero-tag {
   font-family: var(--ff-head); text-transform: uppercase; letter-spacing: .2em;
@@ -320,20 +335,20 @@ body.menu-open .nav-toggle span::after { top: 0; transform: rotate(-45deg); }
   display: grid; grid-template-columns: 1.15fr 0.85fr; gap: clamp(28px, 4vw, 56px); align-items: center;
   padding: clamp(30px, 5vw, 56px); border-radius: var(--radius-lg);
   background:
-    radial-gradient(90% 130% at 100% 0%, rgba(246,184,33,.16), transparent 55%),
+    radial-gradient(90% 130% at 100% 0%, rgba(231,33,43,.18), transparent 55%),
     linear-gradient(160deg, var(--panel), var(--bg));
-  border: 1px solid rgba(246,184,33,.35);
+  border: 1px solid rgba(255,255,255,.16);
 }
 .flagship::after {
   content: ""; position: absolute; inset: 0; pointer-events: none;
   border-radius: var(--radius-lg);
-  box-shadow: inset 0 0 0 1px rgba(246,184,33,.08);
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.06);
 }
 .flag-badge {
   display: inline-flex; align-items: center; gap: 9px;
   font-family: var(--ff-head); text-transform: uppercase; letter-spacing: .2em; font-size: .7rem; font-weight: 600;
-  color: var(--gold); border: 1px solid rgba(246,184,33,.4); border-radius: 999px; padding: 7px 15px;
-  background: rgba(246,184,33,.07);
+  color: #fff; border: 1px solid rgba(255,255,255,.32); border-radius: 999px; padding: 7px 15px;
+  background: rgba(255,255,255,.06);
 }
 .flag-badge svg { width: 14px; height: 14px; }
 .flagship h3 { font-family: var(--ff-display); text-transform: uppercase; font-size: clamp(2rem, 5vw, 3.4rem); line-height: .95; margin: 18px 0 6px; }
@@ -408,18 +423,19 @@ body.menu-open .nav-toggle span::after { top: 0; transform: rotate(-45deg); }
   position: relative; overflow: hidden; border-radius: var(--radius-lg);
   border: 1px solid var(--line); padding: clamp(40px, 7vw, 76px) clamp(24px, 5vw, 64px);
   background:
-    radial-gradient(70% 120% at 0% 0%, rgba(246,184,33,.10), transparent 55%),
-    radial-gradient(70% 120% at 100% 100%, rgba(240,48,71,.12), transparent 55%),
+    radial-gradient(70% 120% at 0% 0%, rgba(255,255,255,.06), transparent 55%),
+    radial-gradient(70% 120% at 100% 100%, rgba(231,33,43,.14), transparent 55%),
     linear-gradient(160deg, var(--panel), var(--bg));
 }
 .reserve-card .eyebrow { justify-content: center; }
 .reserve-card h2 { font-family: var(--ff-display); text-transform: uppercase; font-size: clamp(2.2rem, 6vw, 4.4rem); line-height: .94; margin: 14px 0; }
 .reserve-card h2 .gold { color: var(--gold); }
+.reserve-card h2 .g { color: var(--red); }
 .reserve-card .lead { margin: 0 auto 30px; }
 .reserve-actions { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
 .reserve-feats { display: flex; gap: 26px; justify-content: center; flex-wrap: wrap; margin-top: 34px; }
 .reserve-feats li { display: inline-flex; align-items: center; gap: 8px; font-family: var(--ff-head); text-transform: uppercase; letter-spacing: .1em; font-size: .72rem; color: var(--muted); }
-.reserve-feats svg { width: 16px; height: 16px; color: var(--gold); }
+.reserve-feats svg { width: 16px; height: 16px; color: var(--red); }
 
 /* ---------- Visit / info ---------- */
 .visit { background: var(--bg-2); border-block: 1px solid var(--line); }
