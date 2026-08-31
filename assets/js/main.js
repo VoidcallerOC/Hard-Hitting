@@ -81,6 +81,21 @@ const HOURS = [
   { day: "Saturday",  open: "12:00", close: "18:00" },
 ];
 
+// Phone used for the counter, the mobile dock and the sell/trade text draft.
+const SHOP_SMS = "+18603161075";
+
+// ON THE FLOOR — photo-ready gallery. Tiles render as "coming soon"
+// placeholders until you add real shop photos. To use a real photo:
+// drop it in assets/img/ and set `src` (and optional `alt`) on that entry —
+// the placeholder is replaced automatically. `wide:true` = double-width tile.
+const FLOOR = [
+  { kicker: "At the counter", name: "Buy · Sell · Trade", wide: true, src: "", alt: "" },
+  { kicker: "Behind the glass", name: "Singles & Slabs", src: "", alt: "" },
+  { kicker: "The wall", name: "Sealed Wax", src: "", alt: "" },
+  { kicker: "On the shelves", name: "Sports & TCG", src: "", alt: "" },
+  { kicker: "On the road", name: "The Show Floor", src: "", alt: "" },
+];
+
 /* ------------------------------------------------------------------
    Helpers
    ------------------------------------------------------------------ */
@@ -113,6 +128,80 @@ function eventWhen(show) {
   const weekday = d.toLocaleString("en-US", { weekday: "short" });
   const date = d.toLocaleString("en-US", { month: "short", day: "numeric", year: "numeric" });
   return `${weekday} · ${date}${show.time ? ` · ${show.time}` : ""}`;
+}
+
+/* ------------------------------------------------------------------
+   Live open/closed status — computed in shop-local (Eastern) time so
+   it's correct no matter where the visitor is.
+   ------------------------------------------------------------------ */
+const DAYS = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+const toMin = (hhmm) => { const [h, m] = hhmm.split(":").map(Number); return h * 60 + m; };
+
+function easternNow() {
+  const parts = new Intl.DateTimeFormat("en-US", {
+    timeZone: "America/New_York", weekday: "long", hour: "numeric", minute: "numeric", hourCycle: "h23",
+  }).formatToParts(new Date());
+  const pick = (t) => parts.find((p) => p.type === t)?.value ?? "";
+  const dayIndex = Math.max(0, DAYS.indexOf(pick("weekday")));
+  return { dayIndex, nowMin: Number(pick("hour")) * 60 + Number(pick("minute")) };
+}
+
+function nextOpenRow(from) {
+  for (let i = 1; i <= 7; i++) {
+    const row = HOURS[(from + i) % 7];
+    if (!row.closed) return { row, tomorrow: i === 1 };
+  }
+  return { row: HOURS[(from + 1) % 7], tomorrow: true };
+}
+
+function getStatus() {
+  const { dayIndex, nowMin } = easternNow();
+  const t = HOURS[dayIndex];
+  if (t && !t.closed) {
+    const o = toMin(t.open), c = toMin(t.close);
+    if (nowMin >= o && nowMin < c) {
+      const rem = c - nowMin;
+      return { open: true, dayIndex, nowMin, label: "Open now", detail: rem <= 60 ? `Closes in ${rem} min` : `Until ${fmt12(t.close)}` };
+    }
+    if (nowMin < o) return { open: false, dayIndex, nowMin, label: "Closed", detail: `Opens today at ${fmt12(t.open)}` };
+  }
+  const { row, tomorrow } = nextOpenRow(dayIndex);
+  return { open: false, dayIndex, nowMin, label: "Closed", detail: `Opens ${tomorrow ? "tomorrow" : row.day} at ${fmt12(row.open)}` };
+}
+
+function renderBadge(el, status) {
+  el.classList.toggle("is-open", status.open);
+  el.innerHTML = `<span class="dot"></span><span class="label">${status.label}</span> <span class="detail">· ${status.detail}</span>`;
+}
+
+function updateClock(status) {
+  const clock = $("#clock");
+  if (clock) {
+    const time = new Intl.DateTimeFormat("en-US", { timeZone: "America/New_York", hour: "numeric", minute: "2-digit" }).format(new Date());
+    clock.textContent = `${time} in Southington`;
+  }
+  const meter = $("#dayMeter");
+  if (!meter) return;
+  const t = HOURS[status.dayIndex];
+  if (!status.open || !t || t.closed) { meter.hidden = true; return; }
+  const o = toMin(t.open), c = toMin(t.close);
+  const pct = Math.min(100, Math.max(0, ((status.nowMin - o) / (c - o)) * 100));
+  meter.hidden = false;
+  meter.firstElementChild.style.width = `${pct}%`;
+}
+
+function tickStatus() {
+  const status = getStatus();
+  $$("[data-open-badge]").forEach((el) => renderBadge(el, status));
+  const hs = $("#hoursStatus");
+  if (hs) {
+    hs.className = `hours-status ${status.open ? "open" : "closed"}`;
+    hs.innerHTML = `<span class="dot"></span>${status.label} · ${status.detail}`;
+  }
+  const list = $("#hoursList");
+  if (list) [...list.children].forEach((li, i) => li.classList.toggle("today", i === status.dayIndex));
+  updateClock(status);
+  return status;
 }
 
 /* ------------------------------------------------------------------
@@ -249,32 +338,13 @@ function startCountdown(iso) {
    ------------------------------------------------------------------ */
 function renderHours() {
   const list = $("#hoursList");
-  const status = $("#hoursStatus");
-  const now = new Date();
-  const today = now.getDay(); // 0 = Sunday
-
-  if (list) {
-    list.innerHTML = HOURS.map((h, i) => `
-      <li class="${i === today ? "today" : ""}">
+  if (!list) return;
+  list.innerHTML = HOURS.map((h) => `
+      <li>
         <span class="d">${h.day}</span>
         <span class="t">${h.closed ? "Closed" : `${fmt12(h.open)} – ${fmt12(h.close)}`}</span>
       </li>`).join("");
-  }
-
-  if (status) {
-    const h = HOURS[today];
-    let isOpen = false;
-    if (h && !h.closed) {
-      const mins = now.getHours() * 60 + now.getMinutes();
-      const [oh, om] = h.open.split(":").map(Number);
-      const [ch, cm] = h.close.split(":").map(Number);
-      isOpen = mins >= oh * 60 + om && mins < ch * 60 + cm;
-    }
-    status.className = `hours-status ${isOpen ? "open" : "closed"}`;
-    status.innerHTML = `<span class="dot"></span>${
-      isOpen ? `Open now · until ${fmt12(h.close)}` : "Closed right now"
-    }`;
-  }
+  // Live open/closed status, clock, day meter and today-highlight are driven by tickStatus().
 }
 
 /* ------------------------------------------------------------------
@@ -372,6 +442,122 @@ function initHeroCards() {
 }
 
 /* ------------------------------------------------------------------
+   Render: on the floor (photo-ready gallery / placeholders)
+   ------------------------------------------------------------------ */
+function renderFloor() {
+  const grid = $("#floorGrid");
+  if (!grid) return;
+  const camera = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>`;
+  grid.innerHTML = FLOOR.map((f) => {
+    const wide = f.wide ? " floor-tile--wide" : "";
+    const media = f.src
+      ? `<img src="${f.src}" alt="${f.alt || f.name}" loading="lazy" decoding="async" />`
+      : `<span class="floor-ph">${camera}</span>`;
+    const soon = f.src ? "" : `<span class="floor-soon">Photo coming soon</span>`;
+    return `<div class="floor-tile${wide}">
+      ${media}${soon}
+      <span class="floor-meta"><span class="floor-kicker">${f.kicker}</span><span class="floor-name">${f.name}</span></span>
+    </div>`;
+  }).join("");
+}
+
+/* ------------------------------------------------------------------
+   Sell / trade: draft a text with the collector's details
+   ------------------------------------------------------------------ */
+function initOfferFlow() {
+  const form = $("#offerForm");
+  const photos = $("#offerPhotos");
+  const count = $("#offerPhotoCount");
+  const status = $("#offerStatus");
+
+  photos?.addEventListener("change", () => {
+    const total = Math.min(photos.files.length, 6);
+    if (photos.files.length > 6) { count.textContent = `${total} selected · first 6 suggested`; return; }
+    count.textContent = total ? `${total} photo${total === 1 ? "" : "s"} selected` : "Optional · up to 6";
+  });
+
+  form?.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const data = new FormData(form);
+    const type = data.get("offerType");
+    const category = data.get("offerCategory");
+    const details = String(data.get("offerDetails") || "").trim();
+    const n = Math.min(photos?.files.length || 0, 6);
+    const body = [
+      "Hi Hard Hittin' Cards — I'd like to start an offer.",
+      `I want to: ${type}.`,
+      `I'm bringing: ${category}.`,
+      details ? `Rundown: ${details}` : "Rundown: I'll share the details in person.",
+      n ? `I have ${n} photo${n === 1 ? "" : "s"} to add.` : "",
+    ].filter(Boolean).join("\n");
+    if (status) status.textContent = "Your text draft is ready — attach your selected photos before you send it.";
+    window.location.href = `sms:${SHOP_SMS}?&body=${encodeURIComponent(body)}`;
+  });
+}
+
+/* ------------------------------------------------------------------
+   Copy-to-clipboard + toast
+   ------------------------------------------------------------------ */
+function initCopy() {
+  const toast = $("#toast");
+  let hide;
+  const ping = (msg) => {
+    if (!toast) return;
+    toast.textContent = msg;
+    toast.hidden = false;
+    requestAnimationFrame(() => toast.classList.add("is-on"));
+    clearTimeout(hide);
+    hide = setTimeout(() => {
+      toast.classList.remove("is-on");
+      setTimeout(() => { toast.hidden = true; }, 280);
+    }, 1800);
+  };
+  $$("[data-copy]").forEach((btn) => {
+    btn.addEventListener("click", async () => {
+      const text = btn.getAttribute("data-copy") || "";
+      try {
+        await navigator.clipboard.writeText(text);
+        btn.classList.add("is-copied");
+        setTimeout(() => btn.classList.remove("is-copied"), 1500);
+        ping("Address copied");
+      } catch { ping("Copy from the address above"); }
+    });
+  });
+}
+
+/* ------------------------------------------------------------------
+   Magnetic buttons (desktop, pointer:fine only)
+   ------------------------------------------------------------------ */
+const FINE = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+function initMagnetic() {
+  if (reduceMotion || !FINE) return;
+  $$("[data-magnetic]").forEach((el) => {
+    el.addEventListener("pointermove", (e) => {
+      const r = el.getBoundingClientRect();
+      const dx = e.clientX - (r.left + r.width / 2);
+      const dy = e.clientY - (r.top + r.height / 2);
+      el.style.transform = `translate(${dx * 0.22}px, ${dy * 0.28}px)`;
+    });
+    el.addEventListener("pointerleave", () => { el.style.transform = ""; });
+  });
+}
+
+/* ------------------------------------------------------------------
+   Scroll progress bar
+   ------------------------------------------------------------------ */
+function initScrollProgress() {
+  const sprog = $("#sprog");
+  if (!sprog) return;
+  const tick = () => {
+    const max = document.documentElement.scrollHeight - innerHeight;
+    const p = max > 0 ? Math.min(1, scrollY / max) : 0;
+    sprog.style.setProperty("--p", `${(p * 100).toFixed(2)}%`);
+  };
+  tick();
+  window.addEventListener("scroll", tick, { passive: true });
+}
+
+/* ------------------------------------------------------------------
    Misc
    ------------------------------------------------------------------ */
 function initMisc() {
@@ -388,9 +574,16 @@ document.addEventListener("DOMContentLoaded", () => {
   renderCarry();
   renderShows();
   renderHours();
+  renderFloor();
+  tickStatus();
   initMisc();
   initReveal();
   initNav();
   initCursor();
   initHeroCards();
+  initOfferFlow();
+  initCopy();
+  initMagnetic();
+  initScrollProgress();
+  setInterval(tickStatus, 30_000);
 });
