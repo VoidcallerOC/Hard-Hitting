@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <script>document.documentElement.classList.add('js');</script>
   <title>Hard Hittin' Cards — Trading Card Shop &amp; Card Shows | Southington, CT</title>
-  <meta name="description" content="Hard Hittin' Cards in Southington, CT — sports cards, Pokémon, Magic, Yu-Gi-Oh &amp; One Piece. Buy, sell &amp; trade at the counter, and hit our card shows including our flagship 300+ table show at Foxwoods. Tickets on Treasure." />
+  <meta name="description" content="Hard Hittin' Cards in Southington, CT — sports cards, Pokémon, Magic, Yu-Gi-Oh &amp; One Piece. Buy, sell &amp; trade at the counter, plus card shows at Foxwoods and across Connecticut. Tickets on Treasure." />
   <meta name="theme-color" content="#0A0A0B" />
   <link rel="icon" type="image/svg+xml" href="/assets/img/favicon.svg" />
   <link rel="apple-touch-icon" href="/assets/img/favicon.svg" />
@@ -15,9 +15,10 @@
   <meta property="og:type" content="business.business" />
   <meta property="og:site_name" content="Hard Hittin' Cards" />
   <meta property="og:title" content="Hard Hittin' Cards — Trading Card Shop &amp; Card Shows" />
-  <meta property="og:description" content="Southington, CT's home for sports cards, Pokémon &amp; TCGs. Buy · Sell · Trade — plus CT's biggest card shows, flagship at Foxwoods." />
+  <meta property="og:description" content="Southington, CT's home for sports cards, Pokémon &amp; TCGs. Buy · Sell · Trade — plus card shows across Connecticut, including the Foxwoods flagship." />
   <meta property="og:url" content="https://hardhittincards.com/" />
-  <meta property="og:image" content="https://hardhittincards.com/assets/img/favicon.svg" />
+  <meta property="og:image" content="https://hardhittincards.com/assets/img/mark.svg" />
+  <meta property="og:image:alt" content="Hard Hittin' Cards logo" />
   <meta name="twitter:card" content="summary" />
 
   <!-- Fonts -->
@@ -25,7 +26,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Anton&family=Oswald:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
 
-  <link rel="stylesheet" href="/assets/css/styles.css" />
+  <link rel="stylesheet" href="/assets/css/styles.css?v=20260831" />
 
   <!-- Local business structured data -->
   <script type="application/ld+json">
@@ -76,11 +77,11 @@
     <div class="nav-cta">
       <a class="btn btn--primary" href="#shows">See The Shows</a>
     </div>
-    <button class="nav-toggle" id="navToggle" aria-label="Menu" aria-expanded="false"><span></span></button>
+  <button class="nav-toggle" id="navToggle" aria-label="Menu" aria-controls="navMenu" aria-expanded="false"><span></span></button>
   </header>
 
   <!-- Mobile menu -->
-  <div class="nav-menu" id="navMenu">
+  <div class="nav-menu" id="navMenu" aria-label="Mobile navigation">
     <a href="#counter">Buy / Sell / Trade</a>
     <a href="#carry">What We Carry</a>
     <a href="#shows">Shows</a>
@@ -193,7 +194,7 @@
             <span class="eyebrow gold" data-reveal>The Show Circuit</span>
             <h2 class="h-sec" data-reveal>Card <span class="gold">Shows</span></h2>
           </div>
-          <p class="lead" data-reveal style="margin-bottom:6px">We don't just run a shop — we throw the biggest card shows in Connecticut. Tickets and full details live on Treasure. Grab yours before they sell out.</p>
+          <p class="lead" data-reveal style="margin-bottom:6px">We don't just run a shop — we bring collectors together at card shows across Connecticut. Tickets and full details live on Treasure.</p>
         </div>
 
         <!-- Flagship (featured) show renders here -->
@@ -203,9 +204,9 @@
             <span class="flag-badge">★ Flagship Event</span>
             <h3>Hard Hittin' Cards Show at Foxwoods</h3>
             <div class="flag-where">Rainmaker Expo Center · Foxwoods Resort Casino</div>
-            <p class="flag-copy">Our flagship quarterly — Connecticut's largest card show. 300+ tables of vendors, breakers and collectors under one roof.</p>
+            <p class="flag-copy">Our flagship quarterly — a major Connecticut card show with vendors, breakers and collectors under one roof.</p>
             <div class="flag-actions">
-              <a class="btn btn--gold" href="https://www.ontreasure.com/" target="_blank" rel="noopener">Get Tickets on Treasure</a>
+            <a class="btn btn--gold" href="https://www.ontreasure.com/u/hardhittincardshows" target="_blank" rel="noopener">Find Tickets on Treasure</a>
             </div>
           </div>
           <div class="flag-visual" aria-hidden="true"></div>
@@ -214,7 +215,7 @@
         <!-- Rest of the calendar -->
         <div class="cal" id="calGrid"></div>
 
-        <p class="cal-note" data-reveal>All ticketing is handled on <a href="https://www.ontreasure.com/" target="_blank" rel="noopener">Treasure (ontreasure.com)</a> — follow <a href="https://www.instagram.com/hardhittincardshows/" target="_blank" rel="noopener">@hardhittincardshows</a> for date drops, table releases &amp; on-site giveaways.</p>
+        <p class="cal-note" data-reveal>Event details and ticketing are handled on <a href="https://www.ontreasure.com/u/hardhittincardshows" target="_blank" rel="noopener">Treasure (ontreasure.com)</a> — follow <a href="https://www.instagram.com/hardhittincardshows/" target="_blank" rel="noopener">@hardhittincardshows</a> for date drops, table releases &amp; on-site giveaways.</p>
       </div>
     </section>
 
@@ -224,16 +225,16 @@
         <div class="reserve-card" data-reveal>
           <span class="eyebrow gold">Vendors &amp; Dealers</span>
           <h2>Reserve A <span class="gold">Table</span></h2>
-          <p class="lead">Want to sell at the biggest shows in the state? Lock in your table at a Hard Hittin' Cards show. Prime floor space at Foxwoods and beyond goes fast — reserve on Treasure and set up next to the best in the Northeast.</p>
+          <p class="lead">Want to sell at a Hard Hittin' Cards show? Lock in your table through Treasure. Prime floor space at Foxwoods and beyond goes fast — reserve and set up alongside collectors and dealers from across the Northeast.</p>
           <div class="reserve-actions">
-            <a class="btn btn--gold" href="https://www.ontreasure.com/" target="_blank" rel="noopener">
+            <a class="btn btn--gold" href="https://www.ontreasure.com/u/hardhittincardshows" target="_blank" rel="noopener">
               Reserve On Treasure
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg>
             </a>
             <a class="btn btn--ghost" href="https://www.instagram.com/hardhittincardshows/" target="_blank" rel="noopener">DM @hardhittincardshows</a>
           </div>
           <ul class="reserve-feats">
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>300+ tables at Foxwoods</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Large Foxwoods floor</li>
             <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Heavy foot traffic</li>
             <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Easy Treasure checkout</li>
           </ul>
@@ -298,7 +299,7 @@
             <img src="/assets/img/mark.svg" alt="" width="42" />
             <span class="brand-name">HARD HITTIN' <b>CARDS</b></span>
           </a>
-          <p>Southington, Connecticut's home for sports cards, Pokémon &amp; TCGs — and the promoter behind CT's biggest card shows. Buy · Sell · Trade.</p>
+          <p>Southington, Connecticut's home for sports cards, Pokémon &amp; TCGs — and a card-show promoter serving collectors across the region. Buy · Sell · Trade.</p>
           <div class="footer-socials">
             <a href="https://www.instagram.com/hardhittincards/" target="_blank" rel="noopener" aria-label="Shop Instagram @hardhittincards">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" stroke="none"/></svg>
@@ -318,8 +319,8 @@
           </div>
           <div class="footer-col">
             <h5>Shows</h5>
-            <a href="https://www.ontreasure.com/" target="_blank" rel="noopener">Tickets on Treasure</a>
-            <a href="https://www.ontreasure.com/" target="_blank" rel="noopener">Reserve a Table</a>
+            <a href="https://www.ontreasure.com/u/hardhittincardshows" target="_blank" rel="noopener">Tickets on Treasure</a>
+            <a href="https://www.ontreasure.com/u/hardhittincardshows" target="_blank" rel="noopener">Reserve a Table</a>
             <a href="https://www.instagram.com/hardhittincardshows/" target="_blank" rel="noopener">@hardhittincardshows</a>
           </div>
           <div class="footer-col">
@@ -337,6 +338,6 @@
     </div>
   </footer>
 
-  <script src="/assets/js/main.js" defer></script>
+  <script src="/assets/js/main.js?v=20260831" defer></script>
 </body>
 </html>

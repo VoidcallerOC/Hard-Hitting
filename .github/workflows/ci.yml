@@ -1,0 +1,29 @@
+name: Static site checks
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Validate JavaScript
+        run: node --check assets/js/main.js
+      - name: Validate JSON configuration
+        run: node -e "JSON.parse(require('fs').readFileSync('vercel.json', 'utf8'))"
+      - name: Validate required files
+        run: test -s index.html && test -s assets/css/styles.css && test -s assets/img/mark.svg && test -s assets/img/favicon.svg
+      - name: Check whitespace
+        run: git diff --check

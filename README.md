@@ -5,9 +5,9 @@ and card-show promoter in **Southington, CT**. Sports · Pokémon · Magic ·
 Yu-Gi-Oh · One Piece. _Buy · Sell · Trade._
 
 One owned home base that ties the **shop** and the **shows** together — the
-flagship 300+ table quarterly at Foxwoods and everything in between. Ticketing
-lives on **[Treasure](https://www.ontreasure.com/)**; every ticket / table
-button links out to it.
+flagship quarterly at Foxwoods and everything in between. Ticketing lives on
+**[Treasure](https://www.ontreasure.com/u/hardhittincardshows)**; every ticket /
+table button links out to the organizer page until event-specific links go live.
 
 A fast, fully interactive, **zero-build** static site. No frameworks, no
 compile step — just open `index.html`. That means it hosts anywhere and stays
@@ -42,9 +42,10 @@ Open **`assets/js/main.js`** and edit the blocks at the top:
 - **`CATEGORIES`** — the "What We Carry" cards.
 - **`SHOWS`** — the show calendar. The entry with `featured: true` renders as
   the big flagship card with a live countdown. Set each show's `date`
-  (`YYYY-MM-DD`, powers sorting + the countdown), `when` (the pretty label),
-  `venue`, `blurb`, and `ticketUrl`. Use `tba: true` with an empty `date` for a
-  date-to-be-announced show.
+  (`YYYY-MM-DD`, powers sorting + the countdown), `venue`, `blurb`, and
+  `ticketUrl`. Display weekdays are generated from the ISO date, and dated
+  events before the visitor's current day are automatically hidden. Use
+  `tba: true` with an empty `date` for a date-to-be-announced show.
 - **`TREASURE_URL`** — the default ticket/table link. Swap in per-event
   Treasure URLs on each show's `ticketUrl` as they go live.
 - **`HOURS`** — store hours, Sunday → Saturday. Times are 24h (`"HH:MM"`) so the
@@ -54,9 +55,10 @@ Business name, address `1217 Queen St, 2nd Floor, Southington, CT 06489`, phone
 `860-316-1075`, and the Instagram handles (`@hardhittincards` /
 `@hardhittincardshows`) live in **`index.html`** (search to change).
 
-> **Before launch:** confirm hours in `HOURS`, and replace the seeded show dates
-> in `SHOWS` with the real calendar — they're placeholders. Point each
-> `ticketUrl` at the matching Treasure event page.
+> **Before launch:** confirm hours in `HOURS`, replace the seeded show dates in
+> `SHOWS` with the real calendar, and point each `ticketUrl` at the matching
+> Treasure event page. The organizer profile is the safe fallback until those
+> event-specific URLs are available.
 
 ## Deploy to Vercel
 

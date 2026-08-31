@@ -10,7 +10,7 @@
    ------------------------------------------------------------------ */
 
 // Ticketing lives on Treasure. Per-show URLs default to the shop page below.
-const TREASURE_URL = "https://www.ontreasure.com/";
+const TREASURE_URL = "https://www.ontreasure.com/u/hardhittincardshows";
 
 // What we carry on the shop floor.
 const CATEGORIES = [
@@ -33,20 +33,12 @@ const SHOWS = [
     venue: "Rainmaker Expo Center · Foxwoods Resort Casino",
     date: "2026-10-18",
     when: "Sun · Oct 18, 2026 · 9AM–4PM",
-    blurb: "Our flagship quarterly — Connecticut's largest card show. 300+ tables of vendors, breakers and collectors under one roof at Foxwoods. Sports, Pokémon and every TCG, plus giveaways and grails you won't find anywhere else.",
+    blurb: "Our flagship quarterly — a major Connecticut card show with vendors, breakers and collectors under one roof at Foxwoods. Sports, Pokémon and every TCG, plus giveaways and grails.",
     stats: [
-      { n: "300+", l: "Tables" },
-      { n: "CT's #1", l: "Largest Show" },
+      { n: "Large", l: "Show Floor" },
+      { n: "CT", l: "Flagship Show" },
       { n: "Quarterly", l: "Flagship" },
     ],
-    ticketUrl: TREASURE_URL,
-  },
-  {
-    title: "Southington Monthly Card Show",
-    venue: "Southington, CT",
-    date: "2026-08-30",
-    when: "Sat · Aug 30, 2026",
-    blurb: "Our hometown monthly — dozens of tables, all categories, family-friendly.",
     ticketUrl: TREASURE_URL,
   },
   {
@@ -61,7 +53,7 @@ const SHOWS = [
     title: "Holiday Hit Fest",
     venue: "Greater Hartford, CT",
     date: "2026-12-13",
-    when: "Sat · Dec 13, 2026",
+    when: "Sun · Dec 13, 2026",
     blurb: "Stock up before the holidays — sealed wax, singles and gift-ready slabs.",
     ticketUrl: TREASURE_URL,
   },
@@ -111,6 +103,17 @@ function shortDate(iso) {
     yr: d.getFullYear(),
   };
 }
+function todayIso() {
+  const now = new Date();
+  return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}-${String(now.getDate()).padStart(2, "0")}`;
+}
+function eventWhen(show) {
+  if (!show.date) return show.when || "Dates TBA";
+  const d = new Date(show.date + "T00:00:00");
+  const weekday = d.toLocaleString("en-US", { weekday: "short" });
+  const date = d.toLocaleString("en-US", { month: "short", day: "numeric", year: "numeric" });
+  return `${weekday} · ${date}${show.time ? ` · ${show.time}` : ""}`;
+}
 
 /* ------------------------------------------------------------------
    Render: what we carry
@@ -134,8 +137,10 @@ function renderCarry() {
    Render: flagship + show calendar
    ------------------------------------------------------------------ */
 function renderShows() {
-  const featured = SHOWS.find((s) => s.featured);
+  const today = todayIso();
+  const featured = SHOWS.find((s) => s.featured && (!s.date || s.date >= today));
   const rest = SHOWS.filter((s) => !s.featured)
+    .filter((s) => s.tba || !s.date || s.date >= today)
     .slice()
     .sort((a, b) => {
       if (a.tba && !b.tba) return 1;
@@ -175,7 +180,7 @@ function renderShows() {
             <span class="venue">Foxwoods</span>
           </div>
           <div class="countdown" id="countdown"></div>
-          <div class="t-when">${featured.when || ""}</div>
+          <div class="t-when">${eventWhen(featured)}</div>
         </div>
       </div>`;
     startCountdown(featured.date);
@@ -199,7 +204,7 @@ function renderShows() {
         </span>
         <span class="meta">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
-          ${s.when || ""}
+          ${eventWhen(s)}
         </span>
         <div class="show-actions">
           <a class="link-out" href="${s.ticketUrl}" target="_blank" rel="noopener">
