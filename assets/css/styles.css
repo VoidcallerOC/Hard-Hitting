@@ -136,13 +136,16 @@ body.cursor-active .cursor-glow { opacity: 0.55; }
   padding-block: 12px;
 }
 .brand { display: flex; align-items: center; gap: 12px; }
-.brand svg, .brand img { width: 32px; height: auto; }
+.brand svg { width: 32px; height: auto; }
+.brand .brand-logo { height: 44px; width: auto; display: block; }
+.nav.scrolled .brand .brand-logo { height: 38px; }
 .brand-name {
   font-family: var(--ff-display); text-transform: uppercase;
   font-size: 1.12rem; letter-spacing: 0.02em; line-height: 1;
 }
 .brand-name b { color: var(--red); font-weight: 400; }
 .brand-tag { font-family: var(--ff-head); font-size: .56rem; letter-spacing: .26em; color: var(--muted-2); text-transform: uppercase; }
+.nav .brand-tag { align-self: center; padding-left: 12px; border-left: 1px solid var(--line); }
 
 .nav-links { display: flex; align-items: center; gap: 30px; }
 .nav-links a {
@@ -452,7 +455,7 @@ body.menu-open .nav-toggle span::after { top: 0; transform: rotate(-45deg); }
 /* ---------- Footer ---------- */
 .footer { border-top: 1px solid var(--line); background: var(--bg-2); padding-block: 56px 30px; }
 .footer-top { display: flex; justify-content: space-between; gap: 40px; flex-wrap: wrap; }
-.footer .brand img { width: 42px; }
+.footer .brand .brand-logo { height: 62px; width: auto; }
 .footer-brand p { color: var(--muted); margin-top: 14px; max-width: 34ch; font-size: .92rem; }
 .footer-socials { display: flex; gap: 12px; margin-top: 18px; }
 .footer-socials a { width: 42px; height: 42px; border-radius: 12px; display: grid; place-items: center; border: 1px solid var(--line); color: var(--muted); transition: color .3s ease, border-color .3s ease, transform .3s ease; }
@@ -476,6 +479,7 @@ body.menu-open .nav-toggle span::after { top: 0; transform: rotate(-45deg); }
 }
 @media (max-width: 720px) {
   .nav-links, .nav-cta .btn { display: none; }
+  .nav .brand-tag { display: none; }
   .nav-toggle { display: flex; }
   .nav-menu {
     position: fixed; inset: 0; z-index: 55; background: rgba(10,10,11,.97); backdrop-filter: blur(14px);
