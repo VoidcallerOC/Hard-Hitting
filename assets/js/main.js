@@ -15,7 +15,7 @@ const TREASURE_URL = "https://www.ontreasure.com/u/hardhittincardshows";
 // What we carry on the shop floor.
 const CATEGORIES = [
   { tag: "Sports Cards",      name: "Sports",        note: "Baseball, basketball, football & hockey — vintage to modern, singles to sealed wax.", suit: "⚾", color: "#F03047" },
-  { tag: "Trading Card Game", name: "Pokémon",       note: "Booster boxes, ETBs, singles & the latest sets — always fresh.",                     suit: "⚡", color: "#F6B821" },
+  { tag: "Trading Card Game", name: "Pokémon",       note: "Booster boxes, ETBs, singles & the latest sets — always fresh.",                     suit: "⚡", color: "#F4B41A" },
   { tag: "Trading Card Game", name: "Magic: The Gathering", note: "Singles, sealed, Commander decks & supplies.",                              suit: "🔮", color: "#7A4DD0" },
   { tag: "Trading Card Game", name: "Yu-Gi-Oh!",     note: "Structure decks, tins, singles & tournament staples.",                             suit: "🎴", color: "#2E86C0" },
   { tag: "Trading Card Game", name: "One Piece TCG",  note: "The fastest-growing anime TCG — sealed & singles.",                               suit: "🏴‍☠️", color: "#C0392B" },
