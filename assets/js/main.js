@@ -86,7 +86,7 @@ const SHOP_SMS = "+18603161075";
 
 // ON THE FLOOR — real shop gallery. `wide:true` = double-width tile.
 const FLOOR = [
-  { kicker: "The display wall", name: "Sealed Wax", wide: true, src: "/assets/img/gallery/01.jpg", alt: "Trading card products displayed in a glass cabinet" },
+  { kicker: "The display wall", name: "Cards & Collectibles", wide: true, src: "/assets/img/gallery/01.jpg", alt: "Trading cards and collectibles displayed in a glass cabinet" },
   { kicker: "Behind the glass", name: "Singles & Slabs", src: "/assets/img/gallery/02.jpg", alt: "Illuminated trading card display filled with sealed products" },
   { kicker: "Step inside", name: "Room To Hunt", src: "/assets/img/gallery/03.jpg", alt: "View across the Hard Hittin' Cards shop floor" },
   { kicker: "At the counter", name: "Buy · Sell · Trade", src: "/assets/img/gallery/04.jpg", alt: "Glass sales counter at Hard Hittin' Cards" },
