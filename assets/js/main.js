@@ -84,16 +84,12 @@ const HOURS = [
 // Phone used for the counter, the mobile dock and the sell/trade text draft.
 const SHOP_SMS = "+18603161075";
 
-// ON THE FLOOR — photo-ready gallery. Tiles render as "coming soon"
-// placeholders until you add real shop photos. To use a real photo:
-// drop it in assets/img/ and set `src` (and optional `alt`) on that entry —
-// the placeholder is replaced automatically. `wide:true` = double-width tile.
+// ON THE FLOOR — real shop gallery. `wide:true` = double-width tile.
 const FLOOR = [
-  { kicker: "At the counter", name: "Buy · Sell · Trade", wide: true, src: "", alt: "" },
-  { kicker: "Behind the glass", name: "Singles & Slabs", src: "", alt: "" },
-  { kicker: "The wall", name: "Sealed Wax", src: "", alt: "" },
-  { kicker: "On the shelves", name: "Sports & TCG", src: "", alt: "" },
-  { kicker: "On the road", name: "The Show Floor", src: "", alt: "" },
+  { kicker: "The display wall", name: "Sealed Wax", wide: true, src: "/assets/img/gallery/01.jpg", alt: "Trading card products displayed in a glass cabinet" },
+  { kicker: "Behind the glass", name: "Singles & Slabs", src: "/assets/img/gallery/02.jpg", alt: "Illuminated trading card display filled with sealed products" },
+  { kicker: "Step inside", name: "Room To Hunt", src: "/assets/img/gallery/03.jpg", alt: "View across the Hard Hittin' Cards shop floor" },
+  { kicker: "At the counter", name: "Buy · Sell · Trade", src: "/assets/img/gallery/04.jpg", alt: "Glass sales counter at Hard Hittin' Cards" },
 ];
 
 /* ------------------------------------------------------------------
