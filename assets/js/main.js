@@ -29,42 +29,27 @@ const CATEGORIES = [
 const SHOWS = [
   {
     featured: true,
-    title: "Hard Hittin' Cards Show at Foxwoods",
-    venue: "Rainmaker Expo Center · Foxwoods Resort Casino",
-    date: "2026-10-18",
-    when: "Sun · Oct 18, 2026 · 9AM–4PM",
-    blurb: "Our flagship quarterly — a major Connecticut card show with vendors, breakers and collectors under one roof at Foxwoods. Sports, Pokémon and every TCG, plus giveaways and grails.",
+    title: "Hard Hittin' Card Shows at FOXWOODS CASINO",
+    venue: "Rainmaker Expo Center · Foxwoods Casino · Mashantucket, CT",
+    date: "2026-10-17",
+    endDate: "2026-10-18",
+    time: "Sat 10AM–5PM · Sun 10AM–4PM",
+    when: "Sat · Oct 17 – Sun · Oct 18, 2026 · 10AM–5PM Sat · 10AM–4PM Sun",
+    blurb: "Two full days of sports cards, Pokémon and TCG collecting at Foxwoods, with 300+ vendor tables and a free Saturday trade night from 6–8PM.",
     stats: [
       { n: "Large", l: "Show Floor" },
       { n: "CT", l: "Flagship Show" },
       { n: "Quarterly", l: "Flagship" },
     ],
-    ticketUrl: TREASURE_URL,
+    ticketUrl: "https://www.ontreasure.com/events/hard-hittin-card-shows-at-foxwoods-casino-10172026",
   },
   {
-    title: "Fall Sports Card Spectacular",
-    venue: "Central Connecticut",
-    date: "2026-09-20",
-    when: "Sun · Sep 20, 2026",
-    blurb: "A sports-first show timed for football & hoops season. Breakers welcome.",
-    ticketUrl: TREASURE_URL,
-  },
-  {
-    title: "Holiday Hit Fest",
-    venue: "Greater Hartford, CT",
-    date: "2026-12-13",
-    when: "Sun · Dec 13, 2026",
-    blurb: "Stock up before the holidays — sealed wax, singles and gift-ready slabs.",
-    ticketUrl: TREASURE_URL,
-  },
-  {
-    title: "Winter Foxwoods Show",
-    venue: "Rainmaker Expo Center · Foxwoods",
-    date: "",
-    tba: true,
-    when: "Dates TBA — follow @hardhittincardshows",
-    blurb: "The next quarterly flagship at Foxwoods. Dates and tickets drop on Treasure.",
-    ticketUrl: TREASURE_URL,
+    title: "Hard Hittin' Card Shows @ The Truck Bar",
+    venue: "The Truck Bar · Berlin, CT",
+    date: "2026-09-13",
+    when: "Sun · Sep 13, 2026",
+    blurb: "Join us at The Truck Bar for a card show with 110+ vendor tables filled with sports, Pokémon and TCG cards — new and vintage.",
+    ticketUrl: "https://www.ontreasure.com/events/hard-hittin-card-shows-the-truck-bar-09132026",
   },
 ];
 
@@ -119,6 +104,7 @@ function todayIso() {
   return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}-${String(now.getDate()).padStart(2, "0")}`;
 }
 function eventWhen(show) {
+  if (show.when) return show.when;
   if (!show.date) return show.when || "Dates TBA";
   const d = new Date(show.date + "T00:00:00");
   const weekday = d.toLocaleString("en-US", { weekday: "short" });
