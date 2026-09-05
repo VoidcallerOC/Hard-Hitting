@@ -14,12 +14,17 @@ compile step — just open `index.html`. That means it hosts anywhere and stays
 easy to update for years.
 
 ```
-index.html            ← page markup & content
+index.html                                  ← homepage
+shows/index.html                            ← Connecticut card-show calendar
+shows/foxwoods/index.html                   ← evergreen Foxwoods hub
+shows/foxwoods/october-17-18-2026/index.html ← dated event page
+vendors/index.html                          ← vendor table sales
 assets/
   css/styles.css      ← all styling / design system
   js/main.js          ← interactions + EDITABLE content (carry, shows, hours)
-  img/mark.svg        ← logo mark
-  img/favicon.svg     ← browser tab icon
+  img/                ← logo, OG, gallery
+og.jpg / og-foxwoods.jpg / logo.png         ← root copies for schema.org
+sitemap.xml / robots.txt
 vercel.json           ← deploy config
 ```
 
@@ -65,7 +70,7 @@ Business name, address `1217 Queen St, 2nd Floor, Southington, CT 06489`, phone
 - Import the repo at [vercel.com/new](https://vercel.com/new), or run
   `npx vercel`. No build step or framework preset needed — it's static.
   `vercel.json` is included (clean URLs + long-lived asset caching).
-- Point the domain **hardhittincards.com** at the Vercel project.
+- Point the domain **hardhittincardshop.com** at the Vercel project. Canonicals, sitemap, and JSON-LD all use `https://www.hardhittincardshop.com/`.
 
 Any other static host works too (Netlify, GitHub Pages, Cloudflare Pages).
 
@@ -74,5 +79,7 @@ Any other static host works too (Netlify, GitHub Pages, Cloudflare Pages).
 - Fonts (Anton / Oswald / Inter) load from Google Fonts. To go fully offline,
   self-host them and swap the `<link>` in `index.html`.
 - Respects `prefers-reduced-motion` and is fully keyboard-navigable.
-- Includes SEO meta tags, Open Graph, and LocalBusiness structured data with
-  hours and both Instagram profiles.
+- Includes per-page SEO titles/meta, Open Graph, LocalBusiness + Event + FAQ JSON-LD,
+  a multi-page show calendar (`/shows`, `/shows/foxwoods`, dated event pages),
+  and a `/vendors` table-sales page. Update Treasure URLs and table counts in
+  `assets/js/main.js` (`SHOWS`) when a new date drops; keep the Foxwoods hub URL stable.

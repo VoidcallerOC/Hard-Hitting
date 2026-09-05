@@ -36,12 +36,15 @@ const SHOWS = [
     time: "Sat 10AM–5PM · Sun 10AM–4PM",
     when: "Sat · Oct 17 – Sun · Oct 18, 2026 · 10AM–5PM Sat · 10AM–4PM Sun",
     blurb: "Two full days of sports cards, Pokémon and TCG collecting at Foxwoods, with 300+ vendor tables and a free Saturday trade night from 6–8PM.",
+    tables: "300+",
     stats: [
-      { n: "Large", l: "Show Floor" },
+      { n: "300+", l: "Vendor Tables" },
       { n: "CT", l: "Flagship Show" },
-      { n: "Quarterly", l: "Flagship" },
+      { n: "Free", l: "Sat Trade Night" },
     ],
     ticketUrl: "https://www.ontreasure.com/events/hard-hittin-card-shows-at-foxwoods-casino-10172026",
+    tableUrl: "https://www.ontreasure.com/events/hard-hittin-card-shows-at-foxwoods-casino-10172026",
+    detailsUrl: "/shows/foxwoods/october-17-18-2026",
   },
   {
     title: "Hard Hittin' Card Shows @ The Truck Bar",
@@ -49,7 +52,9 @@ const SHOWS = [
     date: "2026-09-13",
     when: "Sun · Sep 13, 2026",
     blurb: "Join us at The Truck Bar for a card show with 110+ vendor tables filled with sports, Pokémon and TCG cards — new and vintage.",
+    tables: "110+",
     ticketUrl: "https://www.ontreasure.com/events/hard-hittin-card-shows-the-truck-bar-09132026",
+    tableUrl: "https://www.ontreasure.com/events/hard-hittin-card-shows-the-truck-bar-09132026",
   },
 ];
 
@@ -71,10 +76,10 @@ const SHOP_SMS = "+18603161075";
 
 // ON THE FLOOR — real shop gallery. `wide:true` = double-width tile.
 const FLOOR = [
-  { kicker: "The display wall", name: "Cards & Collectibles", wide: true, src: "/assets/img/gallery/01.jpg", alt: "Trading cards and collectibles displayed in a glass cabinet" },
-  { kicker: "Behind the glass", name: "Sealed Display", src: "/assets/img/gallery/02.jpg", alt: "Illuminated display case filled with sealed trading card products" },
-  { kicker: "Step inside", name: "Room To Hunt", src: "/assets/img/gallery/03.jpg", alt: "View across the Hard Hittin' Cards shop floor" },
-  { kicker: "At the counter", name: "Buy · Sell · Trade", src: "/assets/img/gallery/04.jpg", alt: "Glass sales counter at Hard Hittin' Cards" },
+  { kicker: "The display wall", name: "Cards & Collectibles", wide: true, src: "/assets/img/gallery/01.jpg", alt: "Sports card cases at Hard Hittin' Cards Southington" },
+  { kicker: "Behind the glass", name: "Sealed Display", src: "/assets/img/gallery/02.jpg", alt: "Sealed trading card product in glass cases at Hard Hittin' Cards Southington" },
+  { kicker: "Step inside", name: "Room To Hunt", src: "/assets/img/gallery/03.jpg", alt: "Hard Hittin' Cards shop floor Southington CT" },
+  { kicker: "At the counter", name: "Buy · Sell · Trade", src: "/assets/img/gallery/04.jpg", alt: "Hard Hittin' Cards shop counter Southington CT" },
 ];
 
 /* ------------------------------------------------------------------
@@ -237,10 +242,11 @@ function renderShows() {
         <div class="flag-stats">${stats}</div>
         <div class="flag-actions">
           <a class="btn btn--gold" href="${featured.ticketUrl}" target="_blank" rel="noopener">
-            Get Tickets on Treasure
+            Get tickets
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg>
           </a>
-          <a class="btn btn--ghost" href="https://maps.google.com/?q=Foxwoods+Rainmaker+Expo+Center" target="_blank" rel="noopener">Foxwoods Map</a>
+          <a class="btn btn--ghost" href="${featured.tableUrl || featured.ticketUrl}" target="_blank" rel="noopener">Reserve a table</a>
+          ${featured.detailsUrl ? `<a class="btn btn--ghost" href="${featured.detailsUrl}">Event details</a>` : `<a class="btn btn--ghost" href="https://maps.google.com/?q=Foxwoods+Rainmaker+Expo+Center" target="_blank" rel="noopener">Foxwoods Map</a>`}
         </div>
         <p class="flag-note">Tickets & full vendor info hosted on Treasure (ontreasure.com).</p>
       </div>
@@ -275,13 +281,15 @@ function renderShows() {
         </span>
         <span class="meta">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
-          ${eventWhen(s)}
+          ${eventWhen(s)}${s.tables ? ` · ${s.tables} tables` : ""}
         </span>
         <div class="show-actions">
           <a class="link-out" href="${s.ticketUrl}" target="_blank" rel="noopener">
-            ${s.tba ? "Details on Treasure" : "Get Tickets"}
+            ${s.tba ? "Details on Treasure" : "Get tickets"}
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg>
           </a>
+          ${s.tableUrl ? `<a class="link-out" href="${s.tableUrl}" target="_blank" rel="noopener">Reserve a table</a>` : ""}
+          ${s.detailsUrl ? `<a class="link-out" href="${s.detailsUrl}">Event details</a>` : ""}
         </div>
       </article>`;
     }).join("");
