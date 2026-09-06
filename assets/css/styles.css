@@ -391,6 +391,8 @@ body.menu-open .nav-toggle span::after { top: 0; transform: rotate(-45deg); }
 .show h4 { font-family: var(--ff-display); text-transform: uppercase; font-size: 1.5rem; line-height: 1.02; }
 .show .meta { color: var(--muted); font-size: .9rem; display: flex; align-items: center; gap: 8px; }
 .show .meta svg { width: 15px; height: 15px; color: var(--red); flex: none; }
+.show .meta a { color: var(--text); border-bottom: 1px solid rgba(255,255,255,.18); transition: color .2s, border-color .2s; }
+.show .meta a:hover { color: var(--red); border-color: var(--red); }
 .show .show-actions { margin-top: auto; padding-top: 14px; }
 .show .link-out {
   display: inline-flex; align-items: center; gap: 8px;
