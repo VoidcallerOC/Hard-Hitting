@@ -63,8 +63,9 @@ const SHOWS = [
     date: "2026-09-20",
     time: "9AM–2PM",
     when: "Sun · Sep 20, 2026 · 9AM–2PM",
-    blurb: "Sunday morning at the New Britain VFW with 70+ vendor tables of sports, Pokémon, TCG, new & vintage, memorabilia, Funko and toys. $5 at the door, 12 & under free.",
+    blurb: "Sunday morning at the New Britain VFW with 70+ vendor tables of sports, Pokémon, TCG, new & vintage, memorabilia, Funko and toys. $5 cash at the door, 12 & under free — or grab advance tickets on Treasure.",
     tables: "70+",
+    note: "$5 cash at the door · 12 &amp; under free · advance tickets on Treasure",
     ticketUrl: "https://www.ontreasure.com/events/hard-hittin-card-show-sunday-edition-09202026",
   },
 ];
@@ -294,6 +295,10 @@ function renderShows() {
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
           ${eventWhen(s)}${s.tables ? ` · ${s.tables} tables` : ""}
         </span>
+        ${s.note ? `<span class="meta">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 8V6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v2a2 2 0 0 0 0 4v2a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-2a2 2 0 0 0 0-4z"/><path d="M14 6v12"/></svg>
+          ${s.note}
+        </span>` : ""}
         <div class="show-actions">
           <a class="link-out" href="${s.ticketUrl}" target="_blank" rel="noopener">
             ${s.tba ? "Details on Treasure" : "Get tickets"}
