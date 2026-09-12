@@ -78,13 +78,13 @@ const SHOWS = [
 // Use 24h "HH:MM" for open/close so the live open/closed status works.
 // Set closed:true for a day off.
 const HOURS = [
-  { day: "Sunday",    open: "11:00", close: "18:00" },
+  { day: "Sunday",    open: "11:00", close: "20:00" },
   { day: "Monday",    open: "11:00", close: "20:00" },
   { day: "Tuesday",   open: "11:00", close: "20:00" },
   { day: "Wednesday", open: "11:00", close: "20:00" },
   { day: "Thursday",  open: "11:00", close: "20:00" },
   { day: "Friday",    open: "11:00", close: "20:00" },
-  { day: "Saturday",  open: "11:00", close: "18:00" },
+  { day: "Saturday",  open: "11:00", close: "20:00" },
 ];
 
 // Phone used for the counter, the mobile dock and the sell/trade text draft.
