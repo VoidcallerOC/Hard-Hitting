@@ -13,6 +13,11 @@ A fast, fully interactive, **zero-build** static site. No frameworks, no
 compile step — just open `index.html`. That means it hosts anywhere and stays
 easy to update for years.
 
+The existing **Sell It. Trade Up.** section links to the Hard Hittin card-value
+calculator demo. The demo is intentionally labeled as sample-only and uses the
+calculator repository's canonical sample mode; it is not a live market quote,
+does not expose the JustTCG credential, and does not create a guaranteed offer.
+
 ```
 index.html                                  ← homepage
 shows/index.html                            ← Connecticut card-show calendar

@@ -543,6 +543,9 @@ body.menu-open .nav-toggle span::after { top: 0; transform: rotate(-45deg); }
 .trade-steps > div { display: flex; align-items: center; gap: 16px; padding: 14px 18px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--panel); }
 .trade-steps span { font-family: var(--ff-display); color: var(--red); font-size: 1.1rem; letter-spacing: .1em; flex: none; }
 .trade-steps p { color: var(--muted); font-size: .96rem; }
+.trade-demo-cta { margin-top: 28px; }
+.trade-demo-cta .btn { display: inline-flex; gap: 10px; }
+.trade-demo-cta .btn svg { width: 18px; height: 18px; }
 
 .offer-form {
   border: 1px solid var(--line); border-radius: var(--radius-lg);
