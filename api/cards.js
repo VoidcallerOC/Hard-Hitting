@@ -5,6 +5,9 @@ const API_BASE_URL = "https://api.justtcg.com/v1";
 const MAX_RESULTS = 20;
 const CARD_NUMBER_RE = /\b([A-Z]{1,8}\d{1,4})[-\s]?([A-Z]?\d{1,4})\b/i;
 const REQUEST_TIMEOUT_MS = 12_000;
+const JUSTTCG_GAME_ALIASES = {
+  "one-piece": "one-piece-card-game",
+};
 
 function json(res, status, body) {
   res.status(status).setHeader("Cache-Control", "no-store").json(body);
@@ -84,8 +87,10 @@ function searchPlan(query) {
 }
 
 async function requestCards(apiKey, params) {
+  const configuredGame = process.env.JUSTTCG_GAME_ID || "one-piece-card-game";
+  const game = JUSTTCG_GAME_ALIASES[configuredGame] || configuredGame;
   const searchParams = new URLSearchParams({
-    game: process.env.JUSTTCG_GAME_ID || "one-piece",
+    game,
     limit: String(MAX_RESULTS),
     offset: "0",
   });
