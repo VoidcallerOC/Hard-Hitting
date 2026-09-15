@@ -10,6 +10,18 @@ function json(res, status, body) {
   res.status(status).setHeader("Cache-Control", "no-store").json(body);
 }
 
+function safeProviderMessage(status, body) {
+  const code = Number(status);
+  if (code === 401 || code === 403)
+    return `JustTCG authentication failed (HTTP ${code}).`;
+  if (code === 429) return "JustTCG rate limit reached (HTTP 429).";
+  if (code >= 400 && code < 500)
+    return `JustTCG rejected the request (HTTP ${code}).`;
+  if (body?.data && !Array.isArray(body.data))
+    return "JustTCG returned an invalid data shape.";
+  return "Live pricing provider request failed.";
+}
+
 function normalizeTimestamp(value) {
   if (value === null || value === undefined || value === "") return null;
   const numeric = Number(value);
@@ -87,9 +99,21 @@ async function requestCards(apiKey, params) {
       headers: { Accept: "application/json", "x-api-key": apiKey },
       signal: controller.signal,
     });
-    const body = await response.json().catch(() => ({}));
+    const rawBody = await response.text();
+    let body = {};
+    try {
+      body = rawBody ? JSON.parse(rawBody) : {};
+    } catch {
+      body = { raw: rawBody.slice(0, 500) };
+    }
     if (!response.ok) {
-      const error = new Error("Live pricing provider request failed.");
+      console.error("JustTCG request failed", {
+        status: response.status,
+        body: JSON.stringify(body).slice(0, 1000),
+        query: params.q ?? null,
+        game: searchParams.get("game"),
+      });
+      const error = new Error(safeProviderMessage(response.status, body));
       error.status = response.status;
       throw error;
     }
@@ -137,8 +161,16 @@ export default async function handler(req, res) {
   } catch (error) {
     const status =
       Number(error?.status) || (error?.name === "AbortError" ? 504 : 502);
+    if (error?.name === "AbortError")
+      console.error("JustTCG request timed out", { query });
+    else if (!error?.status)
+      console.error("JustTCG request failed before response", {
+        name: error?.name,
+        message: error?.message,
+        query,
+      });
     return json(res, status >= 500 ? 502 : status, {
-      error: "Live pricing provider request failed.",
+      error: error?.message || "Live pricing provider request failed.",
     });
   }
 }
