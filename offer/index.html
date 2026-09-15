@@ -3,122 +3,90 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#0A0A0B" />
     <meta name="description" content="Check the estimated value of your trading cards using Hard Hittin's current market reference and buying rate." />
     <link rel="canonical" href="https://hardhittincardshop.com/offer" />
     <meta property="og:title" content="Hard Hittin Card Offer Calculator" />
     <meta property="og:description" content="Check the estimated value of your trading cards using Hard Hittin's current market reference and buying rate." />
     <meta property="og:url" content="https://hardhittincardshop.com/offer" />
-    <title>Hard Hittin Card Offer Calculator</title>
-    <link rel="stylesheet" href="styles.css" />
-    <script type="module" src="app.js"></script>
+    <title>Card Offer Estimate | Hard Hittin' Cards</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Oswald:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+    <!-- Use absolute production paths: /offer is a nested route. -->
+    <link rel="stylesheet" href="/assets/css/styles.css?v=20260906-shows" />
+    <link rel="stylesheet" href="/offer/styles.css" />
+    <script>document.documentElement.classList.add('js');</script>
   </head>
-  <body>
-    <main class="shell">
-      <header class="topbar">
-        <a class="brand" href="https://hardhittincardshop.com/"
-          >Hard Hittin <span>/</span>
-          <strong data-client-name>Hard Hittin</strong></a
-        >
-        <span class="status-pill">Estimate tool</span>
-      </header>
+  <body class="offer-page">
+    <div class="cursor-glow" aria-hidden="true"></div>
+    <div class="grain" aria-hidden="true"></div>
 
-      <section class="hero">
+    <header class="nav" id="nav">
+      <a class="brand" href="/" aria-label="Hard Hittin' Cards home">
+        <img class="brand-logo" src="/assets/img/logo.png" width="112" height="45" alt="Hard Hittin' Cards shop logo" />
+        <span class="brand-tag">Southington, CT</span>
+      </a>
+      <nav class="nav-links" aria-label="Primary">
+        <a href="/#counter">Buy / Sell / Trade</a>
+        <a href="/offer" aria-current="page">Get an Estimate</a>
+        <a href="/#carry">What We Carry</a>
+        <a href="/shows">Shows</a>
+        <a href="/vendors">Vendors</a>
+        <a href="/#visit">Visit</a>
+      </nav>
+      <div class="nav-cta"><a class="btn btn--primary" href="/shows">See The Shows</a></div>
+      <button class="nav-toggle" id="navToggle" type="button" aria-label="Menu" aria-controls="navMenu" aria-expanded="false"><span></span></button>
+    </header>
+    <div class="nav-menu" id="navMenu" aria-label="Mobile navigation">
+      <a href="/#counter">Buy / Sell / Trade</a>
+      <a href="/offer" aria-current="page">Get an Estimate</a>
+      <a href="/#carry">What We Carry</a>
+      <a href="/shows">Shows</a>
+      <a href="/vendors">Vendors</a>
+      <a href="/#visit">Visit</a>
+      <a class="btn btn--primary" href="/shows">See The Shows</a>
+    </div>
+
+    <main class="offer-content">
+      <section class="offer-hero wrap" aria-labelledby="offer-title">
         <div>
-          <p class="eyebrow">Card buy calculator</p>
-          <h1>Know what your cards could be worth before you walk in.</h1>
-          <p class="lede">
-            Search a card, choose its condition, and get an estimated buy offer
-            based on the shop’s maintained reference pricing.
-          </p>
+          <span class="hero-badge"><span class="dot"></span> Card buy calculator</span>
+          <h1 id="offer-title" class="h-sec">Know what your cards could be worth <span class="g">before you walk in.</span></h1>
+          <p class="lead">Search a card, choose its condition, and get an estimated buy offer based on Hard Hittin's maintained market reference. Bring the card in for a final in-store verification.</p>
         </div>
-        <div class="hero-mark" aria-hidden="true">01<span>→</span>05</div>
+        <div class="offer-hero-mark" aria-hidden="true"><strong>01</strong><span>→</span><strong>05</strong><small>estimate / verify / collect</small></div>
       </section>
 
-      <section class="calculator-grid" aria-label="Buy offer calculator">
+      <section class="offer-tool wrap" aria-label="Buy offer calculator">
         <div class="calculator-card">
-          <div class="step-heading">
-            <span>01</span>
-            <div>
-              <p class="eyebrow">Find your card</p>
-              <h2>Search by name, number, or set</h2>
-            </div>
-          </div>
+          <div class="step-heading"><span>01</span><div><p class="eyebrow">Find your card</p><h2>Search by name, number, or set</h2></div></div>
           <label class="field-label" for="card-search">Card search</label>
-          <input
-            id="card-search"
-            type="search"
-            autocomplete="off"
-            placeholder="Try “Luffy”, “OP17”, or “OP17-001”"
-          />
+          <input id="card-search" type="search" autocomplete="off" placeholder="Try “Mihawk”, “OP17”, or “OP17-001”" />
           <div id="search-results" class="search-results"></div>
-          <p id="search-message" class="field-help">
-            Start typing to see matching cards.
-          </p>
+          <p id="search-message" class="field-help">Start typing to see matching cards.</p>
 
-          <div class="step-heading step-heading--compact">
-            <span>02</span>
-            <div>
-              <p class="eyebrow">Choose condition</p>
-              <h2>How does the card look?</h2>
-            </div>
-          </div>
-          <div
-            id="condition-list"
-            class="condition-list"
-            role="radiogroup"
-            aria-label="Card condition"
-          ></div>
-          <button id="calculate-button" class="button" type="button" disabled>
-            Calculate estimated offer <span aria-hidden="true">→</span>
-          </button>
+          <div class="step-heading step-heading--compact"><span>02</span><div><p class="eyebrow">Choose condition</p><h2>How does the card look?</h2></div></div>
+          <div id="condition-list" class="condition-list" role="radiogroup" aria-label="Card condition"></div>
+          <button id="calculate-button" class="button btn btn--primary" type="button" disabled>Calculate estimated offer <span aria-hidden="true">→</span></button>
         </div>
 
         <aside id="result-panel" class="result-card" aria-live="polite">
           <p class="eyebrow">Estimated offer</p>
-          <div id="result-empty" class="result-empty">
-            <span class="result-number">—</span>
-            <h2>Your estimate will appear here.</h2>
-            <p>
-              Select a card and condition to see the maintained reference price
-              and configured buy rate.
-            </p>
-          </div>
-          <div id="result-ready" hidden>
-            <p class="result-kicker">Estimated offer</p>
-            <p id="offer-value" class="offer-value">$0.00</p>
-            <div class="result-lines">
-              <div>
-                <span>Market Reference</span
-                ><strong id="reference-value">$0.00</strong>
-              </div>
-              <div>
-                <span>Hard Hittin Buy Rate</span
-                ><strong id="rate-value">60%</strong>
-              </div>
-            </div>
-            <p id="result-card-label" class="result-card-label"></p>
-          </div>
-          <div id="result-unavailable" hidden class="unavailable">
-            <strong
-              >Online estimate unavailable for this card/condition.</strong
-            >
-            <p>
-              No maintained market reference was found. We never invent a price.
-            </p>
-          </div>
+          <div id="result-empty" class="result-empty"><span class="result-number">—</span><h2>Your estimate will appear here.</h2><p>Select a card and condition to see the maintained reference price and configured buy rate.</p></div>
+          <div id="result-ready" hidden><p class="result-kicker">Estimated offer</p><p id="offer-value" class="offer-value">$0.00</p><div class="result-lines"><div><span>Market Reference</span><strong id="reference-value">$0.00</strong></div><div><span>Hard Hittin Buy Rate</span><strong id="rate-value">60%</strong></div></div><p id="result-card-label" class="result-card-label"></p></div>
+          <div id="result-unavailable" hidden class="unavailable"><strong>Online estimate unavailable for this card/condition.</strong><p>No maintained market reference was found. We never invent a price.</p></div>
           <p class="pricing-status" data-pricing-status></p>
           <p class="disclaimer" data-disclaimer></p>
         </aside>
       </section>
-
-      <footer class="footer-row">
-        <span data-data-status
-          >Live provider pricing — final offer subject to in-store
-          verification.</span
-        ><a href="https://hardhittincardshop.com/"
-          >Back to Hard Hittin Card Shop</a
-        >
-      </footer>
+      <p class="offer-note wrap"><span class="dot"></span> <span data-data-status>Live provider pricing — estimated offers are subject to in-store verification, authenticity, edition/printing, and physical condition.</span></p>
     </main>
+
+    <footer class="footer">
+      <div class="wrap"><div class="footer-top"><div class="footer-brand"><a class="brand" href="/" aria-label="Hard Hittin' Cards"><img class="brand-logo" src="/assets/img/logo.png" width="188" height="76" alt="Hard Hittin' Cards shop logo" /></a><p>Southington, Connecticut's home for sports cards, Pokémon &amp; TCGs — and a card-show promoter serving collectors across the region. Buy · Sell · Trade.</p><div class="footer-socials"><a href="https://www.instagram.com/hardhittincards/" target="_blank" rel="noopener" aria-label="Shop Instagram">Instagram</a><a href="https://www.tiktok.com/@hardhittincards" target="_blank" rel="noopener" aria-label="TikTok">TikTok</a></div></div><div class="footer-cols"><div class="footer-col"><h5>Explore</h5><a href="/">Home</a><a href="/offer">Get an Estimate</a><a href="/shows">Shows</a><a href="/vendors">Vendors</a></div><div class="footer-col"><h5>Visit</h5><a href="https://maps.google.com/?q=Hard+Hittin+Cards+1217+Queen+St+Southington+CT+06489" target="_blank" rel="noopener">1217 Queen St, Southington</a><a href="tel:+18603161075">860-316-1075</a><a href="https://www.instagram.com/hardhittincards/" target="_blank" rel="noopener">@hardhittincards</a></div></div></div><div class="footer-bottom"><span class="site">HARD HITTIN'<span class="g"> CARDS</span></span><span>© 2026 Hard Hittin' Cards · Southington, CT · All rights reserved.</span></div><p class="forge-attribution">Website by <a href="https://forge-ct.com" target="_blank" rel="noopener noreferrer">Forge-CT</a></p></div>
+    </footer>
+    <script src="/assets/js/main.js?v=20260906-shows" defer></script>
+    <script type="module" src="/offer/app.js"></script>
   </body>
 </html>

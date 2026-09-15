@@ -3,9 +3,9 @@ import {
   formatMoney,
   formatRate,
   parsePercentageToBasisPoints,
-} from "./lib/money.js";
+} from "/offer/lib/money.js";
 
-const config = await fetch("./data/config.json").then(async (response) => {
+const config = await fetch("/offer/data/config.json").then(async (response) => {
   if (!response.ok) throw new Error("Client configuration unavailable.");
   return response.json();
 });
