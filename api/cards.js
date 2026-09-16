@@ -1,30 +1,13 @@
 import { mapCondition } from "../lib/tcgplayer-normalizer.js";
-import { parseMoneyToCents } from "../lib/money.js";
 
 const API_BASE_URL = "https://api.justtcg.com/v1";
 const MAX_RESULTS = 20;
-const CARD_NUMBER_RE = /\b([A-Z]{1,8}\d{1,4})[-\s]?([A-Z]?\d{1,4})\b/i;
 const REQUEST_TIMEOUT_MS = 12_000;
-const JUSTTCG_GAME_ALIASES = {
-  "one-piece": "one-piece-card-game",
-};
+const ALIASES = { "one-piece": "one-piece-card-game" };
 
 function json(res, status, body) {
   res.status(status).setHeader("Cache-Control", "no-store").json(body);
 }
-
-function safeProviderMessage(status, body) {
-  const code = Number(status);
-  if (code === 401 || code === 403)
-    return `JustTCG authentication failed (HTTP ${code}).`;
-  if (code === 429) return "JustTCG rate limit reached (HTTP 429).";
-  if (code >= 400 && code < 500)
-    return `JustTCG rejected the request (HTTP ${code}).`;
-  if (body?.data && !Array.isArray(body.data))
-    return "JustTCG returned an invalid data shape.";
-  return "Live pricing provider request failed.";
-}
-
 function normalizeTimestamp(value) {
   if (value === null || value === undefined || value === "") return null;
   const numeric = Number(value);
@@ -33,108 +16,129 @@ function normalizeTimestamp(value) {
     : new Date(String(value));
   return Number.isNaN(date.getTime()) ? null : date.toISOString();
 }
-
 function normalizeCard(card) {
   if (!card || typeof card !== "object") return null;
-  const cardId = String(card.id ?? card.uuid ?? card.tcgplayerId ?? "").trim();
+  const cardId = String(
+    card.provider_card_id ?? card.uuid ?? card.id ?? card.tcgplayerId ?? "",
+  ).trim();
   const name = String(card.name ?? "").trim();
   if (!cardId || !name) return null;
-  const number = String(
-    card.number ?? card.cardNumber ?? card.card_number ?? "",
-  ).trim();
-  const setCode = String(card.set ?? card.set_code ?? "").trim();
-  const setName = String(card.set_name ?? setCode).trim();
   const pricing = {};
   for (const variant of Array.isArray(card.variants) ? card.variants : []) {
-    let conditionCode;
     try {
-      conditionCode = mapCondition(variant?.condition);
-      const price = Number(variant?.price);
+      const conditionCode = mapCondition(
+        variant.condition_code ?? variant.condition,
+      );
+      const price = Number(
+        variant.reference_cents != null
+          ? variant.reference_cents / 100
+          : variant.price,
+      );
       if (!Number.isFinite(price) || price < 0) continue;
-      const referenceCents = parseMoneyToCents(price.toFixed(2));
-      if (pricing[conditionCode]) continue;
-      pricing[conditionCode] = {
-        reference_cents: referenceCents,
-        source_updated_at: normalizeTimestamp(variant?.lastUpdated),
-        source_variant_id: variant?.uuid ?? variant?.id ?? null,
+      pricing[conditionCode] ??= {
+        reference_cents: Math.round(price * 100),
+        source_updated_at: normalizeTimestamp(
+          variant.source_updated_at ?? variant.lastUpdated,
+        ),
+        source_variant_id:
+          variant.provider_variant_id ?? variant.uuid ?? variant.id ?? null,
       };
     } catch {
-      // Provider records are untrusted: skip only the malformed variant.
+      /* malformed provider rows are unavailable */
     }
   }
   return {
     id: cardId,
     name,
-    card_number: number || cardId,
-    set_code: setCode,
-    set_name: setName,
-    game: String(card.game ?? "").trim() || null,
-    image_url: card.image_url ?? card.imageUrl ?? null,
+    card_number: String(card.card_number ?? card.number ?? cardId),
+    set_code: String(card.set_code ?? card.set ?? ""),
+    set_name: String(card.set_name ?? ""),
+    game: card.game ?? null,
+    image_url: card.image_url ?? null,
+    rarity: card.rarity ?? null,
     pricing,
   };
 }
-
-function searchPlan(query) {
-  const match = query.match(CARD_NUMBER_RE);
-  if (!match) return [{ q: query }];
-  const number = `${match[1]}-${match[2]}`.toUpperCase();
-  const setToken = match[1].toUpperCase();
-  const name = query.replace(match[0], " ").replace(/\s+/g, " ").trim();
-  const plan = [{ q: query }, { number }];
-  if (name) plan.push({ q: name, number });
-  plan.push({ q: setToken, number });
-  return plan;
-}
-
-async function requestCards(apiKey, params) {
-  const configuredGame = process.env.JUSTTCG_GAME_ID || "one-piece-card-game";
-  const game = JUSTTCG_GAME_ALIASES[configuredGame] || configuredGame;
-  const searchParams = new URLSearchParams({
-    game,
-    limit: String(MAX_RESULTS),
-    offset: "0",
+async function catalogSearch(query, gameId) {
+  const base = String(process.env.SUPABASE_URL ?? "").replace(/\/$/, "");
+  const key = process.env.SUPABASE_ANON_KEY;
+  if (!base || !key) return null;
+  const headers = { apikey: key, Authorization: `Bearer ${key}` };
+  const gameResponse = await fetch(
+    `${base}/rest/v1/tcg_games?provider_game_id=eq.${encodeURIComponent(gameId)}&select=id,provider_game_id,name&limit=1`,
+    { headers },
+  );
+  if (!gameResponse.ok) throw new Error("Indexed catalog game lookup failed.");
+  const games = await gameResponse.json();
+  if (!games[0]) return [];
+  const response = await fetch(`${base}/rest/v1/rpc/tcg_catalog_search`, {
+    method: "POST",
+    headers: { ...headers, "Content-Type": "application/json" },
+    body: JSON.stringify({
+      p_game_id: games[0].id,
+      p_query: query,
+      p_limit: 20,
+    }),
   });
-  for (const [key, value] of Object.entries(params)) {
-    if (value) searchParams.set(key, value);
-  }
-  const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), REQUEST_TIMEOUT_MS);
-  try {
-    const response = await fetch(`${API_BASE_URL}/cards?${searchParams}`, {
-      headers: { Accept: "application/json", "x-api-key": apiKey },
-      signal: controller.signal,
+  if (!response.ok) throw new Error("Indexed catalog search failed.");
+  const cards = await response.json();
+  if (!cards.length) return [];
+  const ids = cards.map((card) => card.id).join(",");
+  const variantsResponse = await fetch(
+    `${base}/rest/v1/tcg_card_variants?card_id=in.(${ids})&select=card_id,provider_variant_id,condition,printing,language,tcg_catalog_prices(reference_cents,source_updated_at,active,condition_code)`,
+    { headers },
+  );
+  const variants = variantsResponse.ok ? await variantsResponse.json() : [];
+  const byCard = new Map(
+    cards.map((card) => [card.id, { ...card, variants: [] }]),
+  );
+  for (const variant of variants)
+    for (const price of variant.tcg_catalog_prices ?? [])
+      if (price.active)
+        byCard.get(variant.card_id)?.variants.push({ ...variant, ...price });
+  return [...byCard.values()].map(normalizeCard).filter(Boolean);
+}
+async function providerSearch(query, gameId) {
+  const apiKey = process.env.JUSTTCG_API_KEY;
+  if (!apiKey)
+    throw Object.assign(new Error("Live pricing provider is not configured."), {
+      status: 503,
     });
-    const rawBody = await response.text();
-    let body = {};
+  const numberMatch = query.match(
+    /\b([A-Z]{1,8}\d{1,4})[-\s]?([A-Z]?\d{1,4})\b/i,
+  );
+  const plans = [{ q: query }];
+  if (numberMatch)
+    plans.push({ number: `${numberMatch[1]}-${numberMatch[2]}`.toUpperCase() });
+  for (const plan of plans) {
+    const params = new URLSearchParams({
+      game: ALIASES[gameId] ?? gameId ?? "one-piece-card-game",
+      ...plan,
+      limit: String(MAX_RESULTS),
+      offset: "0",
+    });
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), REQUEST_TIMEOUT_MS);
     try {
-      body = rawBody ? JSON.parse(rawBody) : {};
-    } catch {
-      body = { raw: rawBody.slice(0, 500) };
-    }
-    if (!response.ok) {
-      console.error("JustTCG request failed", {
-        status: response.status,
-        body: JSON.stringify(body).slice(0, 1000),
-        query: params.q ?? null,
-        game: searchParams.get("game"),
+      const response = await fetch(`${API_BASE_URL}/cards?${params}`, {
+        headers: { Accept: "application/json", "x-api-key": apiKey },
+        signal: controller.signal,
       });
-      const error = new Error(safeProviderMessage(response.status, body));
-      error.status = response.status;
-      throw error;
+      const body = await response.json().catch(() => ({}));
+      if (!response.ok)
+        throw Object.assign(
+          new Error("Live pricing provider request failed."),
+          {
+            status: response.status,
+          },
+        );
+      const cards = (body.data ?? []).map(normalizeCard).filter(Boolean);
+      if (cards.length || plan === plans.at(-1)) return cards;
+    } finally {
+      clearTimeout(timeout);
     }
-    if (!Array.isArray(body.data)) {
-      const error = new Error(
-        "Live pricing provider returned an invalid response.",
-      );
-      error.status = 502;
-      throw error;
-    }
-    return body.data;
-  } finally {
-    clearTimeout(timeout);
   }
 }
-
 export default async function handler(req, res) {
   if (req.method !== "GET") {
     res.setHeader("Allow", "GET");
@@ -143,41 +147,25 @@ export default async function handler(req, res) {
   const query = String(req.query?.q ?? "")
     .trim()
     .replace(/\s+/g, " ");
-  if (query.length < 2 || query.length > 120) {
+  const game = String(req.query?.game ?? "one-piece-card-game").trim();
+  if (query.length < 2 || query.length > 120)
     return json(res, 400, {
       error: "Search must be between 2 and 120 characters.",
     });
-  }
-  const apiKey = process.env.JUSTTCG_API_KEY;
-  if (!apiKey)
-    return json(res, 503, {
-      error: "Live pricing provider is not configured.",
-    });
-
   try {
-    let rawCards = [];
-    for (const params of searchPlan(query)) {
-      rawCards = await requestCards(apiKey, params);
-      if (rawCards.length) break;
-    }
+    const indexed = await catalogSearch(query, ALIASES[game] ?? game);
+    const cards = indexed ?? (await providerSearch(query, game));
     return json(res, 200, {
-      cards: rawCards.map(normalizeCard).filter(Boolean),
+      game: ALIASES[game] ?? game,
+      source: indexed ? "indexed-catalog" : "provider-fallback",
+      cards,
     });
   } catch (error) {
     const status =
-      Number(error?.status) || (error?.name === "AbortError" ? 504 : 502);
-    if (error?.name === "AbortError")
-      console.error("JustTCG request timed out", { query });
-    else if (!error?.status)
-      console.error("JustTCG request failed before response", {
-        name: error?.name,
-        message: error?.message,
-        query,
-      });
-    return json(res, status >= 500 ? 502 : status, {
-      error: error?.message || "Live pricing provider request failed.",
+      Number(error.status) || (error.name === "AbortError" ? 504 : 502);
+    return json(res, status === 503 ? 503 : status >= 500 ? 502 : status, {
+      error: error.message || "Card search failed.",
     });
   }
 }
-
-export { normalizeCard, normalizeTimestamp, searchPlan };
+export { normalizeCard, normalizeTimestamp };
