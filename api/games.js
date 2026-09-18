@@ -1,7 +1,13 @@
+import { isDemoMode, demoGames } from "../lib/demo-catalog.js";
 const base = () => String(process.env.SUPABASE_URL ?? "").replace(/\/$/, "");
 const headers = () => ({ apikey: process.env.SUPABASE_ANON_KEY, Authorization: `Bearer ${process.env.SUPABASE_ANON_KEY}` });
 export default async function handler(req, res) {
   if (req.method !== "GET") return res.status(405).json({ error: "Method not allowed." });
+  // Demo mode: serve the bundled demo game list; never call JustTCG/Supabase.
+  if (isDemoMode()) {
+    try { return res.status(200).setHeader("Cache-Control", "no-store").json({ source: "demo-catalog", demo: true, games: demoGames() }); }
+    catch { return res.status(500).json({ error: "Demo catalog is unavailable.", demo: true }); }
+  }
   try {
     if (base() && process.env.SUPABASE_ANON_KEY) {
       const response = await fetch(`${base()}/rest/v1/tcg_games?active=eq.true&select=provider_game_id,name&order=name.asc`, { headers: headers() });

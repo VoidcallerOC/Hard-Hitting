@@ -70,6 +70,32 @@ Business name, address `1217 Queen St, 2nd Floor, Southington, CT 06489`, phone
 > Treasure event page. The organizer profile is the safe fallback until those
 > event-specific URLs are available.
 
+## Card offer calculator (`/offer`) — demo vs live
+
+The `/offer` route is a Hard Hittin buy-offer calculator. It runs in one of two
+modes; there is **no silent fallback** between them.
+
+- **Demo mode** (default in this repo). Fully self-contained: the page loads the
+  bundled sample catalog at `offer/data/demo-catalog.json`, searches it locally,
+  and feeds each card's deterministic **demo reference price** through the same
+  offer engine (`REFERENCE × 60% = OFFER`). It makes **zero** requests to
+  JustTCG, Supabase, or any live pricing provider, and works on any static host.
+  Prices are clearly labeled "Demo market value" — not a live market quote.
+- **Live mode** (production). Search and reference pricing come from the
+  Supabase-backed indexed catalog / JustTCG provider via the `/api/*` functions.
+
+**Toggling the mode.** Because the site is zero-build, the switch has two
+coordinated settings that must agree:
+
+- Client: `demo_mode` in `offer/data/config.json` (`true` = demo, `false` = live).
+- Server: the `DEMO_MODE` environment variable on the deployment
+  (`true`/`1`/`yes`/`on` = demo). When set, `/api/cards` and `/api/games` serve
+  the demo catalog and never call JustTCG/Supabase.
+
+For the live production experience, set `demo_mode` to `false` and unset
+`DEMO_MODE`, then provide the Supabase / JustTCG credentials the `/api/*`
+functions expect.
+
 ## Deploy to Vercel
 
 - Import the repo at [vercel.com/new](https://vercel.com/new), or run

@@ -1,4 +1,5 @@
 import { mapCondition } from "../lib/tcgplayer-normalizer.js";
+import { isDemoMode, searchDemoCards } from "../lib/demo-catalog.js";
 
 const API_BASE_URL = "https://api.justtcg.com/v1";
 const MAX_RESULTS = 20;
@@ -152,6 +153,24 @@ export default async function handler(req, res) {
     return json(res, 400, {
       error: "Search must be between 2 and 120 characters.",
     });
+  // Demo mode is fully self-contained: serve the bundled demo catalog and
+  // never touch the indexed catalog or the live JustTCG provider. No silent
+  // fallback to live — an unmatched query simply returns no cards.
+  if (isDemoMode()) {
+    try {
+      return json(res, 200, {
+        game: ALIASES[game] ?? game,
+        source: "demo-catalog",
+        demo: true,
+        cards: searchDemoCards(ALIASES[game] ?? game, query),
+      });
+    } catch (error) {
+      return json(res, 500, {
+        error: "Demo catalog is unavailable.",
+        demo: true,
+      });
+    }
+  }
   try {
     const indexed = await catalogSearch(query, ALIASES[game] ?? game);
     const cards = indexed ?? (await providerSearch(query, game));
