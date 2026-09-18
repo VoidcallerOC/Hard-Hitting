@@ -1,0 +1,793 @@
+{
+  "demo": true,
+  "note": "Deterministic sample catalog for Hard Hittin demo mode. Prices are demo reference values, NOT live JustTCG market data.",
+  "buy_rate": "60%",
+  "condition_multipliers": {
+    "NM": 100,
+    "LP": 85,
+    "MP": 70,
+    "HP": 55,
+    "DMG": 40
+  },
+  "games": [
+    {
+      "provider_game_id": "pokemon",
+      "name": "Pokémon"
+    },
+    {
+      "provider_game_id": "one-piece-card-game",
+      "name": "One Piece"
+    },
+    {
+      "provider_game_id": "magic-the-gathering",
+      "name": "Magic: The Gathering"
+    },
+    {
+      "provider_game_id": "yugioh",
+      "name": "Yu-Gi-Oh!"
+    },
+    {
+      "provider_game_id": "disney-lorcana",
+      "name": "Disney Lorcana"
+    },
+    {
+      "provider_game_id": "flesh-and-blood",
+      "name": "Flesh and Blood"
+    }
+  ],
+  "cards": {
+    "pokemon": [
+      {
+        "id": "demo:pokemon:cinccino:136-162",
+        "name": "Cinccino",
+        "card_number": "136/162",
+        "set_code": "SVTF",
+        "set_name": "Temporal Forces",
+        "game": "pokemon",
+        "rarity": "Common",
+        "variant": null,
+        "image_url": null,
+        "aliases": ["Cincinno"],
+        "pricing": {
+          "NM": {
+            "reference_cents": 250,
+            "source_updated_at": null,
+            "source_variant_id": "demo:pokemon:cinccino:136-162:NM"
+          },
+          "LP": {
+            "reference_cents": 213,
+            "source_updated_at": null,
+            "source_variant_id": "demo:pokemon:cinccino:136-162:LP"
+          },
+          "MP": {
+            "reference_cents": 175,
+            "source_updated_at": null,
+            "source_variant_id": "demo:pokemon:cinccino:136-162:MP"
+          },
+          "HP": {
+            "reference_cents": 138,
+            "source_updated_at": null,
+            "source_variant_id": "demo:pokemon:cinccino:136-162:HP"
+          },
+          "DMG": {
+            "reference_cents": 100,
+            "source_updated_at": null,
+            "source_variant_id": "demo:pokemon:cinccino:136-162:DMG"
+          }
+        }
+      },
+      {
+        "id": "demo:pokemon:charizard-ex:054-165",
+        "name": "Charizard ex",
+        "card_number": "054/165",
+        "set_code": "MEW",
+        "set_name": "Scarlet & Violet 151",
+        "game": "pokemon",
+        "rarity": "Double Rare",
+        "variant": "Holofoil",
+        "image_url": null,
+        "aliases": [],
+        "pricing": {
+          "NM": {
+            "reference_cents": 3000,
+            "source_updated_at": null,
+            "source_variant_id": "demo:pokemon:charizard-ex:054-165:NM"
+          },
+          "LP": {
+            "reference_cents": 2550,
+            "source_updated_at": null,
+            "source_variant_id": "demo:pokemon:charizard-ex:054-165:LP"
+          },
+          "MP": {
+            "reference_cents": 2100,
+            "source_updated_at": null,
+            "source_variant_id": "demo:pokemon:charizard-ex:054-165:MP"
+          },
+          "HP": {
+            "reference_cents": 1650,
+            "source_updated_at": null,
+            "source_variant_id": "demo:pokemon:charizard-ex:054-165:HP"
+          },
+          "DMG": {
+            "reference_cents": 1200,
+            "source_updated_at": null,
+            "source_variant_id": "demo:pokemon:charizard-ex:054-165:DMG"
+          }
+        }
+      },
+      {
+        "id": "demo:pokemon:pikachu:025-165",
+        "name": "Pikachu",
+        "card_number": "025/165",
+        "set_code": "MEW",
+        "set_name": "Scarlet & Violet 151",
+        "game": "pokemon",
+        "rarity": "Common",
+        "variant": null,
+        "image_url": null,
+        "aliases": [],
+        "pricing": {
+          "NM": {
+            "reference_cents": 500,
+            "source_updated_at": null,
+            "source_variant_id": "demo:pokemon:pikachu:025-165:NM"
+          },
+          "LP": {
+            "reference_cents": 425,
+            "source_updated_at": null,
+            "source_variant_id": "demo:pokemon:pikachu:025-165:LP"
+          },
+          "MP": {
+            "reference_cents": 350,
+            "source_updated_at": null,
+            "source_variant_id": "demo:pokemon:pikachu:025-165:MP"
+          },
+          "HP": {
+            "reference_cents": 275,
+            "source_updated_at": null,
+            "source_variant_id": "demo:pokemon:pikachu:025-165:HP"
+          },
+          "DMG": {
+            "reference_cents": 200,
+            "source_updated_at": null,
+            "source_variant_id": "demo:pokemon:pikachu:025-165:DMG"
+          }
+        }
+      }
+    ],
+    "one-piece-card-game": [
+      {
+        "id": "demo:one-piece-card-game:monkey-d-luffy:op01-001",
+        "name": "Monkey D. Luffy",
+        "card_number": "OP01-001",
+        "set_code": "OP01",
+        "set_name": "Romance Dawn",
+        "game": "one-piece-card-game",
+        "rarity": "Leader",
+        "variant": "Alternate Art",
+        "image_url": null,
+        "aliases": ["Luffy"],
+        "pricing": {
+          "NM": {
+            "reference_cents": 10000,
+            "source_updated_at": null,
+            "source_variant_id": "demo:one-piece-card-game:monkey-d-luffy:op01-001:NM"
+          },
+          "LP": {
+            "reference_cents": 8500,
+            "source_updated_at": null,
+            "source_variant_id": "demo:one-piece-card-game:monkey-d-luffy:op01-001:LP"
+          },
+          "MP": {
+            "reference_cents": 7000,
+            "source_updated_at": null,
+            "source_variant_id": "demo:one-piece-card-game:monkey-d-luffy:op01-001:MP"
+          },
+          "HP": {
+            "reference_cents": 5500,
+            "source_updated_at": null,
+            "source_variant_id": "demo:one-piece-card-game:monkey-d-luffy:op01-001:HP"
+          },
+          "DMG": {
+            "reference_cents": 4000,
+            "source_updated_at": null,
+            "source_variant_id": "demo:one-piece-card-game:monkey-d-luffy:op01-001:DMG"
+          }
+        }
+      },
+      {
+        "id": "demo:one-piece-card-game:roronoa-zoro:op01-025",
+        "name": "Roronoa Zoro",
+        "card_number": "OP01-025",
+        "set_code": "OP01",
+        "set_name": "Romance Dawn",
+        "game": "one-piece-card-game",
+        "rarity": "Super Rare",
+        "variant": null,
+        "image_url": null,
+        "aliases": ["Zoro"],
+        "pricing": {
+          "NM": {
+            "reference_cents": 1800,
+            "source_updated_at": null,
+            "source_variant_id": "demo:one-piece-card-game:roronoa-zoro:op01-025:NM"
+          },
+          "LP": {
+            "reference_cents": 1530,
+            "source_updated_at": null,
+            "source_variant_id": "demo:one-piece-card-game:roronoa-zoro:op01-025:LP"
+          },
+          "MP": {
+            "reference_cents": 1260,
+            "source_updated_at": null,
+            "source_variant_id": "demo:one-piece-card-game:roronoa-zoro:op01-025:MP"
+          },
+          "HP": {
+            "reference_cents": 990,
+            "source_updated_at": null,
+            "source_variant_id": "demo:one-piece-card-game:roronoa-zoro:op01-025:HP"
+          },
+          "DMG": {
+            "reference_cents": 720,
+            "source_updated_at": null,
+            "source_variant_id": "demo:one-piece-card-game:roronoa-zoro:op01-025:DMG"
+          }
+        }
+      },
+      {
+        "id": "demo:one-piece-card-game:dracule-mihawk:op01-070",
+        "name": "Dracule Mihawk",
+        "card_number": "OP01-070",
+        "set_code": "OP01",
+        "set_name": "Romance Dawn",
+        "game": "one-piece-card-game",
+        "rarity": "Super Rare",
+        "variant": null,
+        "image_url": null,
+        "aliases": ["Mihawk"],
+        "pricing": {
+          "NM": {
+            "reference_cents": 1200,
+            "source_updated_at": null,
+            "source_variant_id": "demo:one-piece-card-game:dracule-mihawk:op01-070:NM"
+          },
+          "LP": {
+            "reference_cents": 1020,
+            "source_updated_at": null,
+            "source_variant_id": "demo:one-piece-card-game:dracule-mihawk:op01-070:LP"
+          },
+          "MP": {
+            "reference_cents": 840,
+            "source_updated_at": null,
+            "source_variant_id": "demo:one-piece-card-game:dracule-mihawk:op01-070:MP"
+          },
+          "HP": {
+            "reference_cents": 660,
+            "source_updated_at": null,
+            "source_variant_id": "demo:one-piece-card-game:dracule-mihawk:op01-070:HP"
+          },
+          "DMG": {
+            "reference_cents": 480,
+            "source_updated_at": null,
+            "source_variant_id": "demo:one-piece-card-game:dracule-mihawk:op01-070:DMG"
+          }
+        }
+      },
+      {
+        "id": "demo:one-piece-card-game:nami:op01-016",
+        "name": "Nami",
+        "card_number": "OP01-016",
+        "set_code": "OP01",
+        "set_name": "Romance Dawn",
+        "game": "one-piece-card-game",
+        "rarity": "Rare",
+        "variant": null,
+        "image_url": null,
+        "aliases": [],
+        "pricing": {
+          "NM": {
+            "reference_cents": 600,
+            "source_updated_at": null,
+            "source_variant_id": "demo:one-piece-card-game:nami:op01-016:NM"
+          },
+          "LP": {
+            "reference_cents": 510,
+            "source_updated_at": null,
+            "source_variant_id": "demo:one-piece-card-game:nami:op01-016:LP"
+          },
+          "MP": {
+            "reference_cents": 420,
+            "source_updated_at": null,
+            "source_variant_id": "demo:one-piece-card-game:nami:op01-016:MP"
+          },
+          "HP": {
+            "reference_cents": 330,
+            "source_updated_at": null,
+            "source_variant_id": "demo:one-piece-card-game:nami:op01-016:HP"
+          },
+          "DMG": {
+            "reference_cents": 240,
+            "source_updated_at": null,
+            "source_variant_id": "demo:one-piece-card-game:nami:op01-016:DMG"
+          }
+        }
+      }
+    ],
+    "magic-the-gathering": [
+      {
+        "id": "demo:magic-the-gathering:ragavan-nimble-pilferer:138",
+        "name": "Ragavan, Nimble Pilferer",
+        "card_number": "138",
+        "set_code": "MH2",
+        "set_name": "Modern Horizons 2",
+        "game": "magic-the-gathering",
+        "rarity": "Mythic Rare",
+        "variant": null,
+        "image_url": null,
+        "aliases": [],
+        "pricing": {
+          "NM": {
+            "reference_cents": 4500,
+            "source_updated_at": null,
+            "source_variant_id": "demo:magic-the-gathering:ragavan-nimble-pilferer:138:NM"
+          },
+          "LP": {
+            "reference_cents": 3825,
+            "source_updated_at": null,
+            "source_variant_id": "demo:magic-the-gathering:ragavan-nimble-pilferer:138:LP"
+          },
+          "MP": {
+            "reference_cents": 3150,
+            "source_updated_at": null,
+            "source_variant_id": "demo:magic-the-gathering:ragavan-nimble-pilferer:138:MP"
+          },
+          "HP": {
+            "reference_cents": 2475,
+            "source_updated_at": null,
+            "source_variant_id": "demo:magic-the-gathering:ragavan-nimble-pilferer:138:HP"
+          },
+          "DMG": {
+            "reference_cents": 1800,
+            "source_updated_at": null,
+            "source_variant_id": "demo:magic-the-gathering:ragavan-nimble-pilferer:138:DMG"
+          }
+        }
+      },
+      {
+        "id": "demo:magic-the-gathering:lightning-bolt:117",
+        "name": "Lightning Bolt",
+        "card_number": "117",
+        "set_code": "2X2",
+        "set_name": "Double Masters 2022",
+        "game": "magic-the-gathering",
+        "rarity": "Uncommon",
+        "variant": null,
+        "image_url": null,
+        "aliases": [],
+        "pricing": {
+          "NM": {
+            "reference_cents": 400,
+            "source_updated_at": null,
+            "source_variant_id": "demo:magic-the-gathering:lightning-bolt:117:NM"
+          },
+          "LP": {
+            "reference_cents": 340,
+            "source_updated_at": null,
+            "source_variant_id": "demo:magic-the-gathering:lightning-bolt:117:LP"
+          },
+          "MP": {
+            "reference_cents": 280,
+            "source_updated_at": null,
+            "source_variant_id": "demo:magic-the-gathering:lightning-bolt:117:MP"
+          },
+          "HP": {
+            "reference_cents": 220,
+            "source_updated_at": null,
+            "source_variant_id": "demo:magic-the-gathering:lightning-bolt:117:HP"
+          },
+          "DMG": {
+            "reference_cents": 160,
+            "source_updated_at": null,
+            "source_variant_id": "demo:magic-the-gathering:lightning-bolt:117:DMG"
+          }
+        }
+      },
+      {
+        "id": "demo:magic-the-gathering:sol-ring:263",
+        "name": "Sol Ring",
+        "card_number": "263",
+        "set_code": "C21",
+        "set_name": "Commander 2021",
+        "game": "magic-the-gathering",
+        "rarity": "Uncommon",
+        "variant": null,
+        "image_url": null,
+        "aliases": [],
+        "pricing": {
+          "NM": {
+            "reference_cents": 300,
+            "source_updated_at": null,
+            "source_variant_id": "demo:magic-the-gathering:sol-ring:263:NM"
+          },
+          "LP": {
+            "reference_cents": 255,
+            "source_updated_at": null,
+            "source_variant_id": "demo:magic-the-gathering:sol-ring:263:LP"
+          },
+          "MP": {
+            "reference_cents": 210,
+            "source_updated_at": null,
+            "source_variant_id": "demo:magic-the-gathering:sol-ring:263:MP"
+          },
+          "HP": {
+            "reference_cents": 165,
+            "source_updated_at": null,
+            "source_variant_id": "demo:magic-the-gathering:sol-ring:263:HP"
+          },
+          "DMG": {
+            "reference_cents": 120,
+            "source_updated_at": null,
+            "source_variant_id": "demo:magic-the-gathering:sol-ring:263:DMG"
+          }
+        }
+      }
+    ],
+    "yugioh": [
+      {
+        "id": "demo:yugioh:blue-eyes-white-dragon:lob-001",
+        "name": "Blue-Eyes White Dragon",
+        "card_number": "LOB-001",
+        "set_code": "LOB",
+        "set_name": "Legend of Blue Eyes White Dragon",
+        "game": "yugioh",
+        "rarity": "Ultra Rare",
+        "variant": null,
+        "image_url": null,
+        "aliases": [],
+        "pricing": {
+          "NM": {
+            "reference_cents": 1500,
+            "source_updated_at": null,
+            "source_variant_id": "demo:yugioh:blue-eyes-white-dragon:lob-001:NM"
+          },
+          "LP": {
+            "reference_cents": 1275,
+            "source_updated_at": null,
+            "source_variant_id": "demo:yugioh:blue-eyes-white-dragon:lob-001:LP"
+          },
+          "MP": {
+            "reference_cents": 1050,
+            "source_updated_at": null,
+            "source_variant_id": "demo:yugioh:blue-eyes-white-dragon:lob-001:MP"
+          },
+          "HP": {
+            "reference_cents": 825,
+            "source_updated_at": null,
+            "source_variant_id": "demo:yugioh:blue-eyes-white-dragon:lob-001:HP"
+          },
+          "DMG": {
+            "reference_cents": 600,
+            "source_updated_at": null,
+            "source_variant_id": "demo:yugioh:blue-eyes-white-dragon:lob-001:DMG"
+          }
+        }
+      },
+      {
+        "id": "demo:yugioh:dark-magician:lob-005",
+        "name": "Dark Magician",
+        "card_number": "LOB-005",
+        "set_code": "LOB",
+        "set_name": "Legend of Blue Eyes White Dragon",
+        "game": "yugioh",
+        "rarity": "Ultra Rare",
+        "variant": null,
+        "image_url": null,
+        "aliases": [],
+        "pricing": {
+          "NM": {
+            "reference_cents": 800,
+            "source_updated_at": null,
+            "source_variant_id": "demo:yugioh:dark-magician:lob-005:NM"
+          },
+          "LP": {
+            "reference_cents": 680,
+            "source_updated_at": null,
+            "source_variant_id": "demo:yugioh:dark-magician:lob-005:LP"
+          },
+          "MP": {
+            "reference_cents": 560,
+            "source_updated_at": null,
+            "source_variant_id": "demo:yugioh:dark-magician:lob-005:MP"
+          },
+          "HP": {
+            "reference_cents": 440,
+            "source_updated_at": null,
+            "source_variant_id": "demo:yugioh:dark-magician:lob-005:HP"
+          },
+          "DMG": {
+            "reference_cents": 320,
+            "source_updated_at": null,
+            "source_variant_id": "demo:yugioh:dark-magician:lob-005:DMG"
+          }
+        }
+      },
+      {
+        "id": "demo:yugioh:ash-blossom-joyous-spring:mp16-en141",
+        "name": "Ash Blossom & Joyous Spring",
+        "card_number": "MP16-EN141",
+        "set_code": "MP16",
+        "set_name": "2016 Mega-Tin Mega Pack",
+        "game": "yugioh",
+        "rarity": "Secret Rare",
+        "variant": null,
+        "image_url": null,
+        "aliases": [],
+        "pricing": {
+          "NM": {
+            "reference_cents": 1000,
+            "source_updated_at": null,
+            "source_variant_id": "demo:yugioh:ash-blossom-joyous-spring:mp16-en141:NM"
+          },
+          "LP": {
+            "reference_cents": 850,
+            "source_updated_at": null,
+            "source_variant_id": "demo:yugioh:ash-blossom-joyous-spring:mp16-en141:LP"
+          },
+          "MP": {
+            "reference_cents": 700,
+            "source_updated_at": null,
+            "source_variant_id": "demo:yugioh:ash-blossom-joyous-spring:mp16-en141:MP"
+          },
+          "HP": {
+            "reference_cents": 550,
+            "source_updated_at": null,
+            "source_variant_id": "demo:yugioh:ash-blossom-joyous-spring:mp16-en141:HP"
+          },
+          "DMG": {
+            "reference_cents": 400,
+            "source_updated_at": null,
+            "source_variant_id": "demo:yugioh:ash-blossom-joyous-spring:mp16-en141:DMG"
+          }
+        }
+      }
+    ],
+    "disney-lorcana": [
+      {
+        "id": "demo:disney-lorcana:mickey-mouse-brave-little-tailor:115-204",
+        "name": "Mickey Mouse - Brave Little Tailor",
+        "card_number": "115/204",
+        "set_code": "TFC",
+        "set_name": "The First Chapter",
+        "game": "disney-lorcana",
+        "rarity": "Legendary",
+        "variant": null,
+        "image_url": null,
+        "aliases": [],
+        "pricing": {
+          "NM": {
+            "reference_cents": 3500,
+            "source_updated_at": null,
+            "source_variant_id": "demo:disney-lorcana:mickey-mouse-brave-little-tailor:115-204:NM"
+          },
+          "LP": {
+            "reference_cents": 2975,
+            "source_updated_at": null,
+            "source_variant_id": "demo:disney-lorcana:mickey-mouse-brave-little-tailor:115-204:LP"
+          },
+          "MP": {
+            "reference_cents": 2450,
+            "source_updated_at": null,
+            "source_variant_id": "demo:disney-lorcana:mickey-mouse-brave-little-tailor:115-204:MP"
+          },
+          "HP": {
+            "reference_cents": 1925,
+            "source_updated_at": null,
+            "source_variant_id": "demo:disney-lorcana:mickey-mouse-brave-little-tailor:115-204:HP"
+          },
+          "DMG": {
+            "reference_cents": 1400,
+            "source_updated_at": null,
+            "source_variant_id": "demo:disney-lorcana:mickey-mouse-brave-little-tailor:115-204:DMG"
+          }
+        }
+      },
+      {
+        "id": "demo:disney-lorcana:elsa-snow-queen:042-204",
+        "name": "Elsa - Snow Queen",
+        "card_number": "042/204",
+        "set_code": "TFC",
+        "set_name": "The First Chapter",
+        "game": "disney-lorcana",
+        "rarity": "Legendary",
+        "variant": null,
+        "image_url": null,
+        "aliases": [],
+        "pricing": {
+          "NM": {
+            "reference_cents": 2000,
+            "source_updated_at": null,
+            "source_variant_id": "demo:disney-lorcana:elsa-snow-queen:042-204:NM"
+          },
+          "LP": {
+            "reference_cents": 1700,
+            "source_updated_at": null,
+            "source_variant_id": "demo:disney-lorcana:elsa-snow-queen:042-204:LP"
+          },
+          "MP": {
+            "reference_cents": 1400,
+            "source_updated_at": null,
+            "source_variant_id": "demo:disney-lorcana:elsa-snow-queen:042-204:MP"
+          },
+          "HP": {
+            "reference_cents": 1100,
+            "source_updated_at": null,
+            "source_variant_id": "demo:disney-lorcana:elsa-snow-queen:042-204:HP"
+          },
+          "DMG": {
+            "reference_cents": 800,
+            "source_updated_at": null,
+            "source_variant_id": "demo:disney-lorcana:elsa-snow-queen:042-204:DMG"
+          }
+        }
+      },
+      {
+        "id": "demo:disney-lorcana:stitch-rock-star:064-204",
+        "name": "Stitch - Rock Star",
+        "card_number": "064/204",
+        "set_code": "ROF",
+        "set_name": "Rise of the Floodborn",
+        "game": "disney-lorcana",
+        "rarity": "Legendary",
+        "variant": null,
+        "image_url": null,
+        "aliases": [],
+        "pricing": {
+          "NM": {
+            "reference_cents": 1800,
+            "source_updated_at": null,
+            "source_variant_id": "demo:disney-lorcana:stitch-rock-star:064-204:NM"
+          },
+          "LP": {
+            "reference_cents": 1530,
+            "source_updated_at": null,
+            "source_variant_id": "demo:disney-lorcana:stitch-rock-star:064-204:LP"
+          },
+          "MP": {
+            "reference_cents": 1260,
+            "source_updated_at": null,
+            "source_variant_id": "demo:disney-lorcana:stitch-rock-star:064-204:MP"
+          },
+          "HP": {
+            "reference_cents": 990,
+            "source_updated_at": null,
+            "source_variant_id": "demo:disney-lorcana:stitch-rock-star:064-204:HP"
+          },
+          "DMG": {
+            "reference_cents": 720,
+            "source_updated_at": null,
+            "source_variant_id": "demo:disney-lorcana:stitch-rock-star:064-204:DMG"
+          }
+        }
+      }
+    ],
+    "flesh-and-blood": [
+      {
+        "id": "demo:flesh-and-blood:command-and-conquer:arc000",
+        "name": "Command and Conquer",
+        "card_number": "ARC000",
+        "set_code": "ARC",
+        "set_name": "Arcane Rising",
+        "game": "flesh-and-blood",
+        "rarity": "Majestic",
+        "variant": null,
+        "image_url": null,
+        "aliases": [],
+        "pricing": {
+          "NM": {
+            "reference_cents": 4000,
+            "source_updated_at": null,
+            "source_variant_id": "demo:flesh-and-blood:command-and-conquer:arc000:NM"
+          },
+          "LP": {
+            "reference_cents": 3400,
+            "source_updated_at": null,
+            "source_variant_id": "demo:flesh-and-blood:command-and-conquer:arc000:LP"
+          },
+          "MP": {
+            "reference_cents": 2800,
+            "source_updated_at": null,
+            "source_variant_id": "demo:flesh-and-blood:command-and-conquer:arc000:MP"
+          },
+          "HP": {
+            "reference_cents": 2200,
+            "source_updated_at": null,
+            "source_variant_id": "demo:flesh-and-blood:command-and-conquer:arc000:HP"
+          },
+          "DMG": {
+            "reference_cents": 1600,
+            "source_updated_at": null,
+            "source_variant_id": "demo:flesh-and-blood:command-and-conquer:arc000:DMG"
+          }
+        }
+      },
+      {
+        "id": "demo:flesh-and-blood:enlightened-strike:wtr159",
+        "name": "Enlightened Strike",
+        "card_number": "WTR159",
+        "set_code": "WTR",
+        "set_name": "Welcome to Rathe",
+        "game": "flesh-and-blood",
+        "rarity": "Majestic",
+        "variant": null,
+        "image_url": null,
+        "aliases": [],
+        "pricing": {
+          "NM": {
+            "reference_cents": 2500,
+            "source_updated_at": null,
+            "source_variant_id": "demo:flesh-and-blood:enlightened-strike:wtr159:NM"
+          },
+          "LP": {
+            "reference_cents": 2125,
+            "source_updated_at": null,
+            "source_variant_id": "demo:flesh-and-blood:enlightened-strike:wtr159:LP"
+          },
+          "MP": {
+            "reference_cents": 1750,
+            "source_updated_at": null,
+            "source_variant_id": "demo:flesh-and-blood:enlightened-strike:wtr159:MP"
+          },
+          "HP": {
+            "reference_cents": 1375,
+            "source_updated_at": null,
+            "source_variant_id": "demo:flesh-and-blood:enlightened-strike:wtr159:HP"
+          },
+          "DMG": {
+            "reference_cents": 1000,
+            "source_updated_at": null,
+            "source_variant_id": "demo:flesh-and-blood:enlightened-strike:wtr159:DMG"
+          }
+        }
+      },
+      {
+        "id": "demo:flesh-and-blood:fai-rising-rebellion:upr044",
+        "name": "Fai, Rising Rebellion",
+        "card_number": "UPR044",
+        "set_code": "UPR",
+        "set_name": "Uprising",
+        "game": "flesh-and-blood",
+        "rarity": "Majestic",
+        "variant": "Cold Foil",
+        "image_url": null,
+        "aliases": [],
+        "pricing": {
+          "NM": {
+            "reference_cents": 1200,
+            "source_updated_at": null,
+            "source_variant_id": "demo:flesh-and-blood:fai-rising-rebellion:upr044:NM"
+          },
+          "LP": {
+            "reference_cents": 1020,
+            "source_updated_at": null,
+            "source_variant_id": "demo:flesh-and-blood:fai-rising-rebellion:upr044:LP"
+          },
+          "MP": {
+            "reference_cents": 840,
+            "source_updated_at": null,
+            "source_variant_id": "demo:flesh-and-blood:fai-rising-rebellion:upr044:MP"
+          },
+          "HP": {
+            "reference_cents": 660,
+            "source_updated_at": null,
+            "source_variant_id": "demo:flesh-and-blood:fai-rising-rebellion:upr044:HP"
+          },
+          "DMG": {
+            "reference_cents": 480,
+            "source_updated_at": null,
+            "source_variant_id": "demo:flesh-and-blood:fai-rising-rebellion:upr044:DMG"
+          }
+        }
+      }
+    ]
+  }
+}

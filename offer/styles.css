@@ -33,6 +33,9 @@
 .offer-page .search-result strong { display: block; font: 500 .94rem var(--ff-head); }
 .offer-page .search-result small { display: block; margin-top: 3px; color: var(--muted); }
 .offer-page .search-result > span:last-child { align-self: center; color: var(--red); font: 500 .72rem var(--ff-head); letter-spacing: .08em; }
+.offer-page .search-result-details { min-width: 0; }
+.offer-page .search-result-variant { color: var(--red); text-transform: uppercase; letter-spacing: .06em; font-size: .68rem; }
+.offer-page .search-result-thumb { width: 40px; height: 56px; object-fit: cover; border-radius: 6px; flex: 0 0 auto; background: var(--bg-3, rgba(255,255,255,.05)); }
 .offer-page .step-heading--compact { margin-top: 42px; }
 .offer-page .condition-list { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px; }
 .offer-page .condition-option { min-height: 44px; border: 1px solid var(--line); border-radius: 999px; padding: 10px 16px; background: transparent; color: var(--muted); cursor: pointer; font: 500 .8rem var(--ff-head); letter-spacing: .08em; text-transform: uppercase; }

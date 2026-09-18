@@ -10,6 +10,43 @@ const config = await fetch("/offer/data/config.json").then(async (response) => {
   return response.json();
 });
 
+// DEMO_MODE (client side). When true, the calculator is fully self-contained:
+// it loads a bundled demo catalog and computes offers locally. It makes ZERO
+// requests to /api/* or the JustTCG live pricing provider. When false, the
+// production live-pricing path below runs unchanged. There is no silent
+// fallback between the two modes.
+const DEMO = Boolean(config.demo_mode);
+
+let demoCatalog = null;
+async function loadDemoCatalog() {
+  if (demoCatalog) return demoCatalog;
+  demoCatalog = await fetch("/offer/data/demo-catalog.json").then(
+    (response) => {
+      if (!response.ok) throw new Error("Demo catalog unavailable.");
+      return response.json();
+    },
+  );
+  return demoCatalog;
+}
+function normalizeQuery(value) {
+  return String(value ?? "")
+    .normalize("NFKD")
+    .replace(/[̀-ͯ]/g, "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, " ")
+    .trim();
+}
+function demoCardMatches(card, normalizedQuery) {
+  if (!normalizedQuery) return true;
+  return [
+    card.name,
+    card.card_number,
+    card.set_code,
+    card.set_name,
+    ...(Array.isArray(card.aliases) ? card.aliases : []),
+  ].some((value) => normalizeQuery(value).includes(normalizedQuery));
+}
+
 const conditions = [
   { name: "Near Mint", code: "NM" },
   { name: "Lightly Played", code: "LP" },
@@ -29,19 +66,28 @@ const resultReady = document.querySelector("#result-ready");
 const resultUnavailable = document.querySelector("#result-unavailable");
 const resultPanel = document.querySelector("#result-panel");
 
-const gamesResponse = await fetch("/api/games").catch(() => null);
-if (gamesResponse?.ok) {
-  const gamesBody = await gamesResponse.json().catch(() => ({}));
-  const games = Array.isArray(gamesBody.games) ? gamesBody.games : [];
-  if (games.length) {
-    gameSelect.replaceChildren(
-      ...games.map((game) => {
-        const option = document.createElement("option");
-        option.value = game.provider_game_id ?? game.id;
-        option.textContent = game.name ?? option.value;
-        return option;
-      }),
-    );
+function populateGames(games) {
+  if (!Array.isArray(games) || !games.length) return;
+  gameSelect.replaceChildren(
+    ...games.map((game) => {
+      const option = document.createElement("option");
+      option.value = game.provider_game_id ?? game.id;
+      option.textContent = game.name ?? option.value;
+      return option;
+    }),
+  );
+}
+
+if (DEMO) {
+  // Demo mode never calls /api/games — the game list comes from the local
+  // demo catalog so the demo works on any static host with no backend.
+  const catalog = await loadDemoCatalog();
+  populateGames(catalog.games);
+} else {
+  const gamesResponse = await fetch("/api/games").catch(() => null);
+  if (gamesResponse?.ok) {
+    const gamesBody = await gamesResponse.json().catch(() => ({}));
+    populateGames(gamesBody.games);
   }
 }
 
@@ -58,10 +104,15 @@ function isPricingUsable(pricing) {
 for (const element of document.querySelectorAll("[data-client-name]"))
   element.textContent = config.business_name;
 document.querySelector("[data-disclaimer]").textContent = config.disclaimer;
-document.querySelector("[data-data-status]").textContent =
-  "Live provider pricing — final offer subject to in-store verification.";
-document.querySelector("[data-pricing-status]").textContent =
-  "Search results and reference pricing are retrieved live from JustTCG.";
+document.querySelector("[data-data-status]").textContent = DEMO
+  ? "Demo market value — sample catalog for demonstration only, not a live market quote."
+  : "Live provider pricing — final offer subject to in-store verification.";
+document.querySelector("[data-pricing-status]").textContent = DEMO
+  ? "Demo market value — sample pricing from a local demo catalog, not live JustTCG data."
+  : "Search results and reference pricing are retrieved live from JustTCG.";
+if (DEMO)
+  for (const element of document.querySelectorAll("[data-reference-label]"))
+    element.textContent = "Demo market value";
 document.documentElement.style.setProperty("--brick", config.primary_color);
 document.documentElement.style.setProperty("--yellow", config.secondary_color);
 
@@ -76,7 +127,10 @@ function setUnavailable(title, message) {
 function setSearchLoading(loading) {
   state.loading = loading;
   searchInput.setAttribute("aria-busy", String(loading));
-  if (loading) searchMessage.textContent = "Searching live card data…";
+  if (loading)
+    searchMessage.textContent = DEMO
+      ? "Searching the demo catalog…"
+      : "Searching live card data…";
 }
 
 function renderConditions() {
@@ -117,6 +171,7 @@ function renderSearchResults(cards) {
     button.className = "search-result";
     button.setAttribute("aria-pressed", "false");
     const details = document.createElement("span");
+    details.className = "search-result-details";
     const name = document.createElement("strong");
     const set = document.createElement("small");
     const number = document.createElement("span");
@@ -124,6 +179,20 @@ function renderSearchResults(cards) {
     set.textContent = card.set_name;
     number.textContent = card.card_number;
     details.append(name, set);
+    if (card.variant) {
+      const variant = document.createElement("small");
+      variant.className = "search-result-variant";
+      variant.textContent = card.variant;
+      details.append(variant);
+    }
+    if (card.image_url) {
+      const thumb = document.createElement("img");
+      thumb.className = "search-result-thumb";
+      thumb.loading = "lazy";
+      thumb.alt = "";
+      thumb.src = card.image_url;
+      button.append(thumb);
+    }
     button.append(details, number);
     button.addEventListener("click", () => {
       state.card = card;
@@ -148,7 +217,20 @@ async function searchCards(query) {
   const requestId = ++state.request;
   setSearchLoading(true);
   try {
-    const response = await fetch(`/api/cards?game=${encodeURIComponent(gameSelect.value)}&q=${encodeURIComponent(query)}`);
+    if (DEMO) {
+      // Local demo search — no network request to the pricing provider.
+      const catalog = await loadDemoCatalog();
+      if (requestId !== state.request) return;
+      const normalizedQuery = normalizeQuery(query);
+      const cards = (catalog.cards?.[gameSelect.value] ?? []).filter((card) =>
+        demoCardMatches(card, normalizedQuery),
+      );
+      renderSearchResults(cards);
+      return;
+    }
+    const response = await fetch(
+      `/api/cards?game=${encodeURIComponent(gameSelect.value)}&q=${encodeURIComponent(query)}`,
+    );
     const body = await response.json().catch(() => ({}));
     if (requestId !== state.request) return;
     if (!response.ok)
@@ -184,7 +266,9 @@ searchInput.addEventListener("input", () => {
 gameSelect.addEventListener("change", () => {
   state.card = null;
   searchResults.replaceChildren();
-  searchMessage.textContent = "Start typing to search this game’s indexed catalog.";
+  searchMessage.textContent = DEMO
+    ? "Start typing to search this game’s demo catalog."
+    : "Start typing to search this game’s indexed catalog.";
   calculateButton.disabled = true;
 });
 
@@ -218,8 +302,11 @@ function renderResult() {
   document.querySelector("#rate-value").textContent = formatRate(
     result.rateBasisPoints,
   );
+  const labelParts = [state.card.name, state.card.card_number];
+  if (state.card.variant) labelParts.push(state.card.variant);
+  labelParts.push(state.condition.name);
   document.querySelector("#result-card-label").textContent =
-    `${state.card.name} · ${state.card.card_number} · ${state.condition.name}`;
+    labelParts.join(" · ");
   resultEmpty.hidden = true;
   resultReady.hidden = false;
   resultUnavailable.hidden = true;
